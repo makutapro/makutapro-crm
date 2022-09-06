@@ -6,8 +6,8 @@
 <script src="{{asset('assets/js/icons/feather-icon/feather-icon.js')}}"></script>
 <!-- scrollbar js-->
 <!-- Sidebar jquery-->
-<script src="{{asset('assets/js/config.js')}}"></script>
-<!-- Plugins JS start-->
+<script src="'assets/js/config.js')}}"></script>
+<!-- Plugins JS sta{{asset(rt-->
 @yield('script')
 <!-- Plugins JS Ends-->
 <!-- Theme js-->

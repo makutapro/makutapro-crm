@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Prospect;
+use App\Models\Sales;
 use Illuminate\Http\Request;
 
-class ProspectController extends Controller
+class SalesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,7 @@ class ProspectController extends Controller
      */
     public function index()
     {
-        return view('pages.prospect.index');
-    }
-
-    public function get_all(){
-        $data = HistoryProspect::total_leads()->get();
-        return response()->json($data, 200, $headers);
+        //
     }
 
     /**
@@ -46,22 +41,21 @@ class ProspectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Prospect  $prospect
+     * @param  \App\Models\Sales  $sales
      * @return \Illuminate\Http\Response
      */
-    public function show(Prospect $prospect)
+    public function show(Sales $sales)
     {
-        $data = HistoryProspect::total_leads()->get();
-        return response()->json($data);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Prospect  $prospect
+     * @param  \App\Models\Sales  $sales
      * @return \Illuminate\Http\Response
      */
-    public function edit(Prospect $prospect)
+    public function edit(Sales $sales)
     {
         //
     }
@@ -70,10 +64,10 @@ class ProspectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Prospect  $prospect
+     * @param  \App\Models\Sales  $sales
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Prospect $prospect)
+    public function update(Request $request, Sales $sales)
     {
         //
     }
@@ -81,10 +75,10 @@ class ProspectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Prospect  $prospect
+     * @param  \App\Models\Sales  $sales
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Prospect $prospect)
+    public function destroy(Sales $sales)
     {
         //
     }

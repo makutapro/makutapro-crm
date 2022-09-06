@@ -511,8 +511,10 @@ $(document).ready(function() {
     // Ajax Generated content for a column end
     //Ajax render start here
     $('#render-datatable').DataTable({
-        "ajax": "../assets/ajax/arrays.txt",
-        "deferRender": true
+        "ajax": {
+            "url" : "{{ route('prospect.show') }}"
+        },
+        "deferRender": true,
     });
     //Ajax render end here
     // Server Side proccessing start

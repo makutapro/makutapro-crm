@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Prospect;
+use App\Models\Agent;
 use Illuminate\Http\Request;
 
-class ProspectController extends Controller
+class AgentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,7 @@ class ProspectController extends Controller
      */
     public function index()
     {
-        return view('pages.prospect.index');
-    }
-
-    public function get_all(){
-        $data = HistoryProspect::total_leads()->get();
-        return response()->json($data, 200, $headers);
+        //
     }
 
     /**
@@ -46,22 +41,21 @@ class ProspectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Prospect  $prospect
+     * @param  \App\Models\Agent  $agent
      * @return \Illuminate\Http\Response
      */
-    public function show(Prospect $prospect)
+    public function show(Agent $agent)
     {
-        $data = HistoryProspect::total_leads()->get();
-        return response()->json($data);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Prospect  $prospect
+     * @param  \App\Models\Agent  $agent
      * @return \Illuminate\Http\Response
      */
-    public function edit(Prospect $prospect)
+    public function edit(Agent $agent)
     {
         //
     }
@@ -70,10 +64,10 @@ class ProspectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Prospect  $prospect
+     * @param  \App\Models\Agent  $agent
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Prospect $prospect)
+    public function update(Request $request, Agent $agent)
     {
         //
     }
@@ -81,10 +75,10 @@ class ProspectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Prospect  $prospect
+     * @param  \App\Models\Agent  $agent
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Prospect $prospect)
+    public function destroy(Agent $agent)
     {
         //
     }

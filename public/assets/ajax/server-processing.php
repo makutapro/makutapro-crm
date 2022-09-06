@@ -19,7 +19,7 @@
  */
  
 // DB table to use
-$table = 'datatables_demo';
+$table = 'prospect';
  
 // Table's primary key
 $primaryKey = 'id';
@@ -29,24 +29,9 @@ $primaryKey = 'id';
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
 $columns = array(
-    array( 'db' => 'first_name', 'dt' => 0 ),
-    array( 'db' => 'last_name',  'dt' => 1 ),
-    array( 'db' => 'position',   'dt' => 2 ),
-    array( 'db' => 'office',     'dt' => 3 ),
-    array(
-        'db'        => 'start_date',
-        'dt'        => 4,
-        'formatter' => function( $d, $row ) {
-            return date( 'jS M y', strtotime($d));
-        }
-    ),
-    array(
-        'db'        => 'salary',
-        'dt'        => 5,
-        'formatter' => function( $d, $row ) {
-            return '$'.number_format($d);
-        }
-    )
+    array( 'db' => 'nama_prospect', 'dt' => 0 ),
+    array( 'db' => 'hp',  'dt' => 1 ),
+    array( 'db' => 'email',   'dt' => 2 ),
 );
  
 // SQL server connection information

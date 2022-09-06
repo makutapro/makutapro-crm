@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProspectController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\AgentController;
+use App\Http\Controllers\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,15 +17,22 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('pages.index');
-})->middleware(['auth'])->name('/');
+// Route::get('/', function () {
+//     return view('pages.index');
+// })->middleware(['auth'])->name('/');
+
+Route::match(['get', 'post'], '/', [DashboardController::class, 'index'])->name('/')->middleware(['auth']);
+
+Route::resource('prospect', ProspectController::class)->middleware(['auth']);
+Route::resource('project', ProjectController::class)->middleware(['auth']);
+Route::resource('agent', AgentController::class)->middleware(['auth']);
+Route::resource('sales', SalesController::class)->middleware(['auth']);
 
 
 
-Route::get('/dashboard', function () {
-    return view('pages.index');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('pages.index');
+// })->middleware(['auth'])->name('dashboard');
 
 
 
