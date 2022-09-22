@@ -20,7 +20,6 @@ class HistoryProspect extends Model
                     ->join('pt','pt.id','history_prospect.pt_id')
                     ->join('users','users.id','pt.user_id')
                     ->where('users.id',Auth::user()->id);
-                    // ->get();
     }
 
 }
