@@ -23,4 +23,22 @@ class HistoryProspect extends Model
                     // ->get();
     }
 
+    public static function all_leads(){
+        return DB::table('history_prospect')
+                ->leftJoin('prospect','prospect.id','history_prospect.prospect_id')
+                ->leftJoin('pt','pt.id','history_prospect.pt_id')
+                ->leftJoin('project','project.id','history_prospect.project_id')
+                ->leftJoin('agent','agent.id','history_prospect.agent_id')
+                ->leftJoin('sales','sales.id','history_prospect.sales_id')
+                ->leftJoin('users','users.id','pt.user_id')
+                ->leftJoin('status','status.id','prospect.status_id')
+                ->leftJoin('sumber_data','sumber_data.id','prospect.sumber_data_id')
+                ->leftJoin('sumber_platform','sumber_platform.id','prospect.sumber_platform_id')
+                ->leftJoin('campaign','campaign.id','prospect.campaign_id')
+                ->leftJoin('log_first_process','log_first_process.prospect_id','prospect.id')
+                ->where('users.id',Auth::user()->id)
+                ->orderBy('prospect.id','desc');
+                
+    }
+
 }

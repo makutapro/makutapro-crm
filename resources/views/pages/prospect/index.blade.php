@@ -29,25 +29,39 @@
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
-						<table class="display datatables" id="render-datatable">
+						<table class="display datatables" id="prospect-datatable">
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th>Position</th>
-									<th>Office</th>
-									<th>Age</th>
-									<th>Start date</th>
-									<th>Salary</th>
+									{{-- <th>No</th> --}}
+									<th>ID</th>
+									<th>Nama & No Hp</th>
+									<th>Source</th>
+									<th>Plarform</th>
+									<th>Campaign</th>
+									<th>Project</th>
+									<th>Agent & Sales</th>
+									<th>Status</th>
+									<th>Input Date</th>
+									<th>Process Date</th>
+									{{-- <th>Closing</th> --}}
+									{{-- <th>Action</th> --}}
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
-									<th>Name</th>
-									<th>Position</th>
-									<th>Office</th>
-									<th>Age</th>
-									<th>Start date</th>
-									<th>Salary</th>
+									{{-- <th>No</th> --}}
+									<th>ID</th>
+									<th>Nama & No Hp</th>
+									<th>Source</th>
+									<th>Plarform</th>
+									<th>Campaign</th>
+									<th>Project</th>
+									<th>Agent & Sales</th>
+									<th>Status</th>
+									<th>Input Date</th>
+									<th>Process Date</th>
+									{{-- <th>Closing</th> --}}
+									{{-- <th>Action</th> --}}
 								</tr>
 							</tfoot>
 						</table>

@@ -31,13 +31,13 @@ class DashboardController extends Controller
     {
         $total = HistoryProspect::total_leads()->count();
         $process = HistoryProspect::total_leads()
-                ->whereBetween('prospect.status',[2, 4])
+                ->whereBetween('prospect.status_id',[2, 4])
                 ->count();
         $closing = HistoryProspect::total_leads()
-                ->where('prospect.status',5)
+                ->where('prospect.status_id',5)
                 ->count();
         $notinterest = HistoryProspect::total_leads()
-                ->where('prospect.status',6)
+                ->where('prospect.status_id',6)
                 ->count();
         // dd($closing,$notinterest);
         return view('pages.dashboard.index',compact(

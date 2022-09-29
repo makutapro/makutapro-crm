@@ -23,6 +23,7 @@ use App\Http\Controllers\SalesController;
 
 Route::match(['get', 'post'], '/', [DashboardController::class, 'index'])->name('/')->middleware(['auth']);
 
+Route::get('prospect/getall', [ProspectController::class, 'get_all'])->middleware(['auth'])->name('prospect.all');
 Route::resource('prospect', ProspectController::class)->middleware(['auth']);
 Route::resource('project', ProjectController::class)->middleware(['auth']);
 Route::resource('agent', AgentController::class)->middleware(['auth']);

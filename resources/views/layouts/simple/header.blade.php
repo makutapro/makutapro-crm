@@ -16,7 +16,7 @@
       <div class="logo-wrapper"><a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo.png')}}" alt=""></a></div>
       <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i></div>
     </div>
-    <div class="nav-right col-12 pull-right right-header p-0">
+    <div class="nav-right col-12 pull-right right-header p-0" >
       <ul class="nav-menus">
         <li class="profile-nav onhover-dropdown p-0 me-0">
           <div class="media profile-media">
