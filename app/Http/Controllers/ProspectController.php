@@ -22,7 +22,8 @@ class ProspectController extends Controller
 
     public function get_all(Request $request){
         // return($request->search);
-        // dd(HistoryProspect::all_leads()->get());
+        // dd(HistoryProspect::all_leads()->get()[234]);
+        // dd(HistoryProspect::all_leads()->get()[234]);
         $data = [
             'draw' => $request->draw,
             // 'recordsTotal' => HistoryProspect::total_leads()->count(),

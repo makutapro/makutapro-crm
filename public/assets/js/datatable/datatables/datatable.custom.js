@@ -537,11 +537,11 @@ $(document).ready(function() {
 
             //     }
             // },
-            { data: 'prospect_id' },
+            { data: 'id' },
             {
                 mRender: function(data, type, row) {
                     return `
-                        <span>${row.nama_prospect}</span><br><a href='https://api.whatsapp.com/send?phone=${row.kode_negara}${row.hp}' target='_blank'><span class='card-subtitle' style='color:#6F9CD3'>${row.Hp}</span></a>
+                        <span>${row.nama_prospect}</span><br><a href='https://api.whatsapp.com/send?phone=${row.kode_negara.substring(1)}${row.hp.substring(1)}' target='_blank'><span class='card-subtitle' style='color:#6F9CD3'>${row.hp}</span></a>
                     `
                 }
             },

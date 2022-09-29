@@ -34,22 +34,22 @@ class ProjectController extends Controller
         if(count($data) > 0){
             for ($i=0; $i < count($data[0]->project) ; $i++) { 
                 $data[0]->project[$i]->new = HistoryProspect::total_leads()
-                                    ->where('prospect.status',1)
+                                    ->where('prospect.status_id',1)
                                     ->where('history_prospect.project_id','=',$data[0]->project[$i]->id)
                                     ->count();
     
                 $data[0]->project[$i]->process = HistoryProspect::total_leads()
-                                    ->whereBetween('prospect.status',[2,3,4])
+                                    ->whereBetween('prospect.status_id',[2,3,4])
                                     ->where('history_prospect.project_id','=',$data[0]->project[$i]->id)
                                     ->count();
     
                 $data[0]->project[$i]->notinterested = HistoryProspect::total_leads()
-                                    ->where('prospect.status',6)
+                                    ->where('prospect.status_id',6)
                                     ->where('history_prospect.project_id','=',$data[0]->project[$i]->id)
                                     ->count();
     
                 $data[0]->project[$i]->closing = HistoryProspect::total_leads()
-                                    ->where('prospect.status',5)
+                                    ->where('prospect.status_id',5)
                                     ->where('history_prospect.project_id','=',$data[0]->project[$i]->id)
                                     ->count();
             }
