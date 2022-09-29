@@ -30,9 +30,9 @@
 
 					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='prospect.index' ? 'active' : '' }}" href="{{route('prospect.index')}}"><i data-feather="list"> </i><span>Prospect</span></a></li>
 
-					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='project.*' ? 'active' : '' }}" href="{{route('project.index')}}"><i data-feather="layers"> </i><span>Project</span></a></li>
+					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='project.index' ? 'active' : '' }}" href="{{route('project.index')}}"><i data-feather="layers"> </i><span>Project</span></a></li>
 
-					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='agent.*' ? 'active' : '' }}" href="{{route('agent.index')}}"><i data-feather="users"> </i><span>Agent</span></a></li>
+					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='agent.index' ? 'active' : '' }}" href="{{route('agent.index')}}"><i data-feather="users"> </i><span>Agent</span></a></li>
 
 
 				</ul>

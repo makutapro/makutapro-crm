@@ -111,15 +111,15 @@
 								</div>
 								<div class="col-xl-12 p-0 left_side_earning">
 									<h5>$4055.56 </h5>
-									<p class="font-roboto">This Month Earning</p>
+									<p class="font-roboto">This Month Budget</p>
 								</div>
 								<div class="col-xl-12 p-0 left_side_earning">
 									<h5>$1004.11</h5>
-									<p class="font-roboto">This Month Profit</p>
+									<p class="font-roboto">Cost per leads</p>
 								</div>
 								<div class="col-xl-12 p-0 left_side_earning">
 									<h5>90%</h5>
-									<p class="font-roboto">This Month Sale</p>
+									<p class="font-roboto">Cost per Acquisition</p>
 								</div>
 								<div class="col-xl-12 p-0 left-btn"><a class="btn btn-gradient">Summary</a></div>
 							</div>
@@ -140,8 +140,8 @@
 									<div class="col-xl-4 col-md-4 col-sm-4 col-12 p-0 justify-content-end">
 										<div class="inner-top-right">
 											<ul class="d-flex list-unstyled justify-content-end">
-												<li>Online</li>
-												<li>Store</li>
+												<li>Digital Source</li>
+												<li>Sales</li>
 											</ul>
 										</div>
 									</div>
@@ -196,14 +196,13 @@
 				   <div class="row">
 					  <div class="col-9">
 						 <h5>Platform Chart</h5>
+						 <p class="pb-0" style="margin-bottom: -20px">This is a bar chart of Prospect by Platform</p>
 					  </div>
 					  <div class="col-3 text-end"><i class="text-muted" data-feather="navigation"></i></div>
 				   </div>
 				</div>
 				<div class="card-body">
-				   <div class="chart-container">
-					  <div id="columnchart"></div>
-				   </div>
+					<div id="platform-bar"></div>
 				</div>
 			 </div>
 		</div>
@@ -213,13 +212,14 @@
 				   <div class="row">
 					  <div class="col-9">
 						 <h5>Source Chart</h5>
+						 <p class="pb-0" style="margin-bottom: -20px">This is a bar chart of Prospect by Source</p>
 					  </div>
 					  <div class="col-3 text-end"><i class="text-muted" data-feather="navigation"></i></div>
 				   </div>
 				</div>
 				<div class="card-body">
 				   <div class="chart-container">
-					  <div id="columnchart"></div>
+					  <div id="source-bar"></div>
 				   </div>
 				</div>
 			 </div>
@@ -302,4 +302,175 @@
 <script src="{{asset('assets/js/general-widget.js')}}"></script>
 <script src="{{asset('assets/js/height-equal.js')}}"></script>
 <script src="{{asset('assets/js/tooltip-init.js')}}"></script>
+
+<script>
+	// report chart leads
+	var options = {
+		series: [{
+			name: 'series1',
+			data: [15, 20, 15, 40, 18, 20, 18, 23, 18, 35, 30, 55, 0]
+		}, {
+			name: 'series2',
+			data: [2, 22, 35, 32, 40, 25, 50, 38, 42, 28, 20, 45, 0]
+		}],
+		chart: {
+			height: 240,
+			type: 'area',
+			toolbar: {
+				show: false
+			},
+		},
+		dataLabels: {
+			enabled: false
+		},
+		stroke: {
+			curve: 'smooth'
+		},
+		xaxis: {
+			type: 'category',
+			low: 0,
+			offsetX: 0,
+			offsetY: 0,
+			show: false,
+			categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+			labels: {
+				low: 0,
+				offsetX: 0,
+				show: false,
+			},
+			axisBorder: {
+				low: 0,
+				offsetX: 0,
+				show: false,
+			},
+		},
+		markers: {
+			strokeWidth: 3,
+			colors: "#ffffff",
+			strokeColors: [ CubaAdminConfig.primary , CubaAdminConfig.secondary ],
+			hover: {
+				size: 6,
+			}
+		},
+		yaxis: {
+			low: 0,
+			offsetX: 0,
+			offsetY: 0,
+			show: false,
+			labels: {
+				low: 0,
+				offsetX: 0,
+				show: true,
+			},
+			axisBorder: {
+				low: 0,
+				offsetX: 0,
+				show: false,
+			},
+		},
+		grid: {
+			show: false,
+			padding: {
+				left: 0,
+				right: 0,
+				bottom: -15,
+				top: -40
+			}
+		},
+		colors: [ CubaAdminConfig.primary , CubaAdminConfig.secondary ],
+		fill: {
+			type: 'gradient',
+			gradient: {
+				shadeIntensity: 1,
+				opacityFrom: 0.7,
+				opacityTo: 0.5,
+				stops: [0, 80, 100]
+			}
+		},
+		legend: {
+			show: false,
+		},
+		tooltip: {
+			x: {
+				format: 'MM'
+			},
+		},
+	};
+
+	var chart = new ApexCharts(document.querySelector("#chart-currently"), options);
+	chart.render();
+</script>
+
+<script>
+	// platform chart
+	var options2 = {
+		chart: {
+			height: 350,
+			type: 'bar',
+			toolbar:{
+			show: true
+			}
+		},
+		plotOptions: {
+			bar: {
+				horizontal: true,
+			}
+		},
+		dataLabels: {
+			enabled: true
+		},
+		series: [{
+			data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+		}],
+		xaxis: {
+			categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
+		},
+		colors:[ CubaAdminConfig.orange_mkt ]
+	}
+
+	var chart2 = new ApexCharts(
+		document.querySelector("#platform-bar"),
+		options2
+	);
+
+	chart2.render();
+
+</script>
+
+<script>
+	// source chart
+	var options2 = {
+		chart: {
+			height: 350,
+			type: 'bar',
+			toolbar:{
+			show: true
+			}
+		},
+		plotOptions: {
+			bar: {
+				horizontal: true,
+			}
+		},
+		dataLabels: {
+			enabled: true
+		},
+		series: [{
+			data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+		}],
+		xaxis: {
+			categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan', 'United States', 'China', 'Germany'],
+		},
+		colors:[ CubaAdminConfig.blue_mkt ]
+	}
+
+	var chart2 = new ApexCharts(
+		document.querySelector("#source-bar"),
+		options2
+	);
+
+	chart2.render();
+
+</script>
+
 @endsection

@@ -40,6 +40,7 @@ class DashboardController extends Controller
                 ->where('prospect.status_id',6)
                 ->count();
         // dd($closing,$notinterest);
+
         return view('pages.dashboard.index',compact(
             'total','process','closing','notinterest'
         ));
