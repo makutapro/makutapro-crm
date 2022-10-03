@@ -30,6 +30,10 @@ Route::resource('agent', AgentController::class)->middleware(['auth']);
 Route::resource('sales', SalesController::class)->middleware(['auth']);
 
 
+Route::get('/getsales', [AgentController::class, 'getSales'])->name('agent.getsales');
+Route::get('/get_agent', [AgentController::class, 'get_agent'])->name('agent.getagent');
+
+
 
 // Route::get('/dashboard', function () {
 //     return view('pages.index');

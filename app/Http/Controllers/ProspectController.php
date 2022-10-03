@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Prospect;
+use App\Models\Project;
 use App\Models\HistoryProspect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProspectController extends Controller
 {
@@ -16,14 +19,16 @@ class ProspectController extends Controller
     public function index()
     {
         $data = HistoryProspect::total_leads()->get();
-        // dd($data);
-        return view('pages.prospect.index');
+        $project = Project::get_project()->select('project.*')->get();
+        $platform = DB::table('sumber_platform')->get();
+        $source = DB::table('sumber_data')->get();
+        $status = DB::table('status')->get();
+        
+        return view('pages.prospect.index',compact('project','platform','source','status'));
     }
 
     public function get_all(Request $request){
         // return($request->search);
-        // dd(HistoryProspect::all_leads()->get()[234]);
-        // dd(HistoryProspect::all_leads()->get()[234]);
         $data = [
             'draw' => $request->draw,
             // 'recordsTotal' => HistoryProspect::total_leads()->count(),

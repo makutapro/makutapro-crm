@@ -523,7 +523,6 @@ $(document).ready(function() {
             "url": "prospect/getall"
         },
         "columns": [
-
             // {
             //     mRender: function(data, type, row) {
             //         if (row.status == '2') {
@@ -556,14 +555,20 @@ $(document).ready(function() {
                     `
                 }
             },
-            { data: 'status' },
+            {
+                mRender: function(data, type, row) {
+                    return `
+                    ${row.status}<br><small class="card-subtitle" style="font-size: 11px;">${row.alasan != null ? row.alasan : ''}</small>
+                    `
+                }
+            },
             { data: 'created_at' },
-            { data: 'accept_at' },
             // {
             //     mRender: function(data, type, row) {
-            //         return '<span>' + row.created_at + ' ' + +'</span>';
+            //         return moment(row.created_at).format("d-m-y")
             //     }
-            // }
+            // },
+            { data: 'accept_at' },
         ],
         "deferRender": true,
     });

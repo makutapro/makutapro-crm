@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agent;
+use App\Models\Sales;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller
@@ -81,5 +82,23 @@ class AgentController extends Controller
     public function destroy(Agent $agent)
     {
         //
+    }
+
+    public function get_agent(Request $request)
+    {
+        $agent = Agent::where('project_id',$request->project)->pluck(
+            'nama_agent',
+            'id'
+        );
+
+        return response()->json($agent);
+    }
+
+    public function getsales(Request $request)
+    {
+        $sales = Sales::where('sales.agent_id',$request->agent)
+                        ->pluck('nama_sales','id');
+
+        return response()->json($sales);
     }
 }

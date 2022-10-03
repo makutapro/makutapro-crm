@@ -34,8 +34,9 @@ class HistoryProspect extends Model
                 ->leftJoin('sumber_data','sumber_data.id','prospect.sumber_data_id')
                 ->leftJoin('sumber_platform','sumber_platform.id','prospect.sumber_platform_id')
                 ->leftJoin('campaign','campaign.id','prospect.campaign_id')
-                ->select('prospect.*','sumber_data.nama_sumber','sumber_platform.nama_platform','campaign.nama_campaign','project.nama_project','agent.kode_agent','sales.nama_sales','status.status')
-                // ->leftJoin('log_first_process','log_first_process.prospect_id','prospect.id')
+                ->leftJoin('leads_not_interested','leads_not_interested.prospect_id','prospect.id')
+                ->leftJoin('not_interested','not_interested.id','leads_not_interested.not_interested_id')
+                ->select('prospect.*','sumber_data.nama_sumber','sumber_platform.nama_platform','campaign.nama_campaign','project.nama_project','agent.kode_agent','sales.nama_sales','status.status','not_interested.alasan')
                 ->where('users.id',Auth::user()->id)
                 ->orderBy('prospect.id','desc');
                 
