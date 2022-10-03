@@ -62,7 +62,7 @@
 									<div class="col-12 col-lg-3 table-filters ">
 										<div class="filter-container">
 											<label class="control-label">Platform</label>
-											<select id="filter-Platform" class="select2 form-control" name="Platform">
+											<select id="platform" class="select2 form-control" name="Platform">
 												<option value="">All</option>
 												@foreach ($platform as $item)
 												<option value="{{$item->id}}">{{$item->nama_platform}}</option>
@@ -75,7 +75,7 @@
 									<div class="col-12 col-lg-3 table-filters pb-0 ">
 										<div class="filter-container">
 											<label class="control-label">Source</label>
-											<select id="filter-Source" class="select2 form-control" name="Source">
+											<select id="source" class="select2 form-control" name="Source">
 												<option value="">All</option>
 												@foreach ($source as $item)
 												<option value="{{$item->id}}">{{$item->nama_sumber}}</option>
@@ -86,7 +86,7 @@
 									<div class="col-12 col-lg-3 table-filters pb-0 ">
 										<div class="filter-container">
 											<label class="control-label">Status</label>
-											<select id="filter-status" class="select2 form-control" name="status">
+											<select id="status" class="select2 form-control" name="status">
 												<option value="">All</option>
 												@foreach ($status as $item)
 												<option value="{{$item->id}}">{{$item->status}}</option>
@@ -97,7 +97,7 @@
 									<div class="col-12 col-lg-3 table-filters pb-0 ">
 										<div class="filter-container">
 											<label class="control-label">Level</label>
-											<select id="filter-level" class="select2 form-control" name="level">
+											<select id="role" class="select2 form-control" name="level">
 												<option value="">All</option>
 												<option value="Auto System">Makuta</option>
 												<option value="Sales">Sales</option>
@@ -109,11 +109,11 @@
 											<div class="row">
 												<div class="col-6">
 													<label class="control-label">Since:</label>
-													<input class="form-control form-control-sm datetimepicker" name="dateSince" data-min-view="2" data-date-format="yyyy-mm-dd" autocomplete="off">
+													<input class="form-control form-control-sm datetimepicker" name="dateSince" data-min-view="2" data-date-format="yyyy-mm-dd" autocomplete="off" id="since">
 												</div>
 												<div class="col-6">
 													<label class="control-label">To:</label>
-													<input class="form-control form-control-sm datetimepicker" name="dateTo" data-min-view="2" data-date-format="yyyy-mm-dd" autocomplete="off">
+													<input class="form-control form-control-sm datetimepicker" name="dateTo" data-min-view="2" data-date-format="yyyy-mm-dd" autocomplete="off" id="to">
 												</div>
 											</div>
 										</div>

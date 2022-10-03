@@ -520,7 +520,18 @@ $(document).ready(function() {
     $('#prospect-datatable').DataTable({
         "serverSide": true,
         "ajax": {
-            "url": "prospect/getall"
+            "url": "prospect/getall",
+            "data": {
+                "project": $("#project").val(),
+                "agent": $("#agent").val(),
+                "sales": $("#sales").val(),
+                "platform": $("#platform").val(),
+                "source": $("#source").val(),
+                "status": $("#status").select2().val(),
+                "role": $("#role").val(),
+                "since": $("#since").val(),
+                "to": $("#to").val(),
+            }
         },
         "columns": [
             // {
