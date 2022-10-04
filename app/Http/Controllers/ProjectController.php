@@ -56,7 +56,7 @@ class ProjectController extends Controller
 
             $data = $data[0]->project;
         }
-        
+        // dd($data);
         return view('pages.project.index',compact('data'));
     }
 
@@ -100,7 +100,8 @@ class ProjectController extends Controller
      */
      public function show(Project $project)
     {
-        //
+        
+        return view('pages.project.show', compact('project'));
     }
 
     /**
@@ -123,7 +124,10 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $project->nama_project = $request->nama_project;
+        $project->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -135,5 +139,23 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    public function get_prospect(Request $request){
+         // return($request->search);
+         $data = [
+            'draw' => $request->draw,
+            // 'recordsTotal' => HistoryProspect::total_leads()->count(),
+            'recordsFiltered' => HistoryProspect::all_leads()
+                                ->where('prospect.nama_prospect','like','%'.$request->search['value'].'%')
+                                // ->where('history_prospect.project_id',$request->project)
+                                ->count(),
+            'data' => HistoryProspect::all_leads()
+                    ->where('prospect.nama_prospect','like','%'.$request->search['value'].'%')
+                    // ->where('history_prospect.project_id',$request->project)
+                    ->skip($request->start)->take($request->length)->get()
+        ];
+        // $data = HistoryProspect::total_leads()->get();
+        return response()->json($data);
     }
 }

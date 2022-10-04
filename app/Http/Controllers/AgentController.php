@@ -15,7 +15,8 @@ class AgentController extends Controller
      */
     public function index()
     {
-        //
+        // $agent = Agent
+        return view('pages.agent.index');
     }
 
     /**

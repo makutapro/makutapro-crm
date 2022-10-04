@@ -527,7 +527,74 @@ $(document).ready(function() {
                 "sales": $("#sales").val(),
                 "platform": $("#platform").val(),
                 "source": $("#source").val(),
-                "status": $("#status").select2().val(),
+                "status": $("#status").val(),
+                "role": $("#role").val(),
+                "since": $("#since").val(),
+                "to": $("#to").val(),
+            }
+        },
+        "columns": [
+            // {
+            //     mRender: function(data, type, row) {
+            //         if (row.status == '2') {
+            //             return `
+            //             <span class='bg-red' style='border-left: red solid 2px;'>
+            //                 ${row.status}
+            //             </span>`;
+            //         } else {
+            //             return `<span class='bg-blue'> ${row.status}</span>`;
+            //         }
+
+            //     }
+            // },
+            { data: 'id' },
+            {
+                mRender: function(data, type, row) {
+                    return `
+                        <span>${row.nama_prospect}</span><br><a href='https://api.whatsapp.com/send?phone=${row.kode_negara.substring(1)}${row.hp.substring(1)}' target='_blank'><span class='card-subtitle' style='color:#6F9CD3'>${row.hp}</span></a>
+                    `
+                }
+            },
+            { data: 'nama_sumber' },
+            { data: 'nama_platform' },
+            { data: 'nama_campaign' },
+            { data: 'nama_project' },
+            {
+                mRender: function(data, type, row) {
+                    return `
+                    <span style="color:#6F9CD3">${row.kode_agent}</span><br><span class="card-subtitle">${row.nama_sales}</span>
+                    `
+                }
+            },
+            {
+                mRender: function(data, type, row) {
+                    return `
+                    ${row.status}<br><small class="card-subtitle" style="font-size: 11px;">${row.alasan != null ? row.alasan : ''}</small>
+                    `
+                }
+            },
+            { data: 'created_at' },
+            // {
+            //     mRender: function(data, type, row) {
+            //         return moment(row.created_at).format("d-m-y")
+            //     }
+            // },
+            { data: 'accept_at' },
+        ],
+        "deferRender": true,
+    });
+    
+    $('#prospect-project-datatable').DataTable({
+        "serverSide": true,
+        "ajax": {
+            "url": "prospect",
+            "data": {
+                "project": $("#project").val(),
+                "agent": $("#agent").val(),
+                "sales": $("#sales").val(),
+                "platform": $("#platform").val(),
+                "source": $("#source").val(),
+                "status": $("#status").val(),
                 "role": $("#role").val(),
                 "since": $("#since").val(),
                 "to": $("#to").val(),

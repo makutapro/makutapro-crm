@@ -24,11 +24,11 @@ use App\Http\Controllers\SalesController;
 Route::match(['get', 'post'], '/', [DashboardController::class, 'index'])->name('/')->middleware(['auth']);
 
 Route::get('prospect/getall', [ProspectController::class, 'get_all'])->middleware(['auth'])->name('prospect.all');
+Route::get('project/prospect', [ProjectController::class, 'get_prospect'])->middleware(['auth'])->name('project.prospect');
 Route::resource('prospect', ProspectController::class)->middleware(['auth']);
 Route::resource('project', ProjectController::class)->middleware(['auth']);
 Route::resource('agent', AgentController::class)->middleware(['auth']);
 Route::resource('sales', SalesController::class)->middleware(['auth']);
-
 
 Route::get('/getsales', [AgentController::class, 'getSales'])->name('agent.getsales');
 Route::get('/get_agent', [AgentController::class, 'get_agent'])->name('agent.getagent');
@@ -37,7 +37,7 @@ Route::get('/get_agent', [AgentController::class, 'get_agent'])->name('agent.get
 
 // Route::get('/dashboard', function () {
 //     return view('pages.index');
-// })->middleware(['auth'])->name('dashboard');
+// })->middleware(['auth'])->name('dashboard'); 
 
 
 
