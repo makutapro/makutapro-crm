@@ -143,17 +143,17 @@ class ProjectController extends Controller
 
     public function get_prospect(Request $request){
          // return($request->search);
-         $data = [
+        $query = HistoryProspect::all_leads();
+        if($request->project != ""){
+            $query = $query->where('history_prospect.project_id','=',$request->project);
+        }
+        $data = [
             'draw' => $request->draw,
             // 'recordsTotal' => HistoryProspect::total_leads()->count(),
-            'recordsFiltered' => HistoryProspect::all_leads()
-                                ->where('prospect.nama_prospect','like','%'.$request->search['value'].'%')
-                                // ->where('history_prospect.project_id',$request->project)
-                                ->count(),
-            'data' => HistoryProspect::all_leads()
-                    ->where('prospect.nama_prospect','like','%'.$request->search['value'].'%')
-                    // ->where('history_prospect.project_id',$request->project)
-                    ->skip($request->start)->take($request->length)->get()
+            // nampilin count data
+            'recordsFiltered' => $query->count(),
+            // nampilin semua data 
+            'data' => $query->skip($request->start)->take($request->length)->get()
         ];
         // $data = HistoryProspect::total_leads()->get();
         return response()->json($data);

@@ -29,15 +29,40 @@ class ProspectController extends Controller
 
     public function get_all(Request $request){
         // return($request->search);
+        $query = HistoryProspect::all_leads() ->where('prospect.nama_prospect','like','%'.$request->search['value'].'%');
+        if($request->project != ""){
+            $query = $query->where('history_prospect.project_id','=',$request->project);
+        }
+        if($request->since != ""){
+            $query = $query->where('prospect.created_at','>=',$request->since);
+        }
+        if($request->to != ""){
+            $query = $query->where('prospect.created_at','<=',$request->to);
+        }
+        
+        $field = [
+            'prospect.id',
+            'prospect.nama_prospect',
+            'sumber_data.nama_sumber'
+            // 'sumber_platform_id',
+            // 'campaign_id',
+            // 'project_id',
+            ];
+        $query = $query->orderBy($field[$request->order[0]['column']],$request->order[0]['dir']);
+        // if($request->status != ""){
+        //     $query = $query->where();
+        // }
+        // if($request->status != ""){
+        //     $query = $query->where();
+        // }
+        
         $data = [
             'draw' => $request->draw,
             // 'recordsTotal' => HistoryProspect::total_leads()->count(),
-            'recordsFiltered' => HistoryProspect::all_leads()
-                                ->where('prospect.nama_prospect','like','%'.$request->search['value'].'%')
-                                ->count(),
-            'data' => HistoryProspect::all_leads()
-                    ->where('prospect.nama_prospect','like','%'.$request->search['value'].'%')
-                    ->skip($request->start)->take($request->length)->get()
+            // nampilin count data
+            'recordsFiltered' => $query->count(),
+            // nampilin semua data 
+            'data' => $query->skip($request->start)->take($request->length)->get()
         ];
         // $data = HistoryProspect::total_leads()->get();
         return response()->json($data);

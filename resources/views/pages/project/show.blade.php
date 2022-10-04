@@ -27,6 +27,7 @@
 					<span>For change name of project</span>
 				</div>
 				<div class="card-body">
+					<input type="hidden" value="{{$project->id}}" id="project_id" name="project">
 					<form method="POST" action="{{route('project.update',$project->id)}}" role="form">
                         @method('PUT')
                         @csrf
