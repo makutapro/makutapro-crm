@@ -29,6 +29,32 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
+        // $prospect_cpy = Prospect::all();
+        // for ($i=0; $i < count($prospect_cpy) ; $i++) { 
+        //     $p = Prospectt::find($prospect_cpy[$i]->id);
+        //         if($p->LevelInputID == 'system'){
+        //             Prospect::where('id',$prospect_cpy[$i]->id)->update([
+        //                 'role_by' => 4
+        //             ]);
+        //         }
+        // }
+
+        // $prospect_cpy = Prospect::all();
+        // $prospect = Prospectt::all();
+        // for ($i=0; $i < count($prospect) ; $i++) {
+        //     for ($j=0; $j < count($prospect_cpy) ; $j++) { 
+        //         if($prospect_cpy[$j]->id == $prospect[$i]->ProspectID){
+        //             if($prospect[$i]->LevelInputID == 'system'){
+        //                 Prospect::where('id',$prospect_cpy[$j]->id)->update([
+        //                     'role_by' => 4
+        //                 ]);
+        //             }
+        //         }
+        //     } 
+        // }
+        // die;
+        // dd(count($prospect));
+
         $total = HistoryProspect::total_leads()->count();
         $process = HistoryProspect::total_leads()
                 ->whereBetween('prospect.status_id',[2, 4])

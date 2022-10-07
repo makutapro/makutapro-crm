@@ -58,7 +58,7 @@
                                  @else
                                  <span class="badge badge-success">Done</span>
                                  @endif
-                                 <h6>{{$item->nama_project}}</h6>
+                                 <h6 class="mt-2">{{$item->nama_project}}</h6>
                                  <div class="media">
                                     <img class="img-20 me-1 rounded-circle" src="{{asset('assets/images/user/3.jpg')}}" alt="" data-original-title="" title="">
                                     <div class="media-body">
@@ -115,8 +115,6 @@
 <script src="{{asset('assets/js/modal-animated.js')}}"></script>
 
 <script>
-   // $("#project").click(function(){
-   //    console.log($(this).val())
-   // })
+   
 </script>
 @endsection

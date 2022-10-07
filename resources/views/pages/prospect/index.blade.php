@@ -3,6 +3,7 @@
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
 @endsection
 
 @section('style')
@@ -24,7 +25,19 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-header">
-					<h5>Prospect Table</h5>
+					<h5 >Prospect Table</h5>
+					{{-- <div class="d-flex justify-content-end">
+						<a class="btn btn-primary" href="{{ route('prospect.create') }}"> <i data-feather="plus-square"> </i>Create New Project</a>
+					</div> --}}
+					{{-- <div class="row">
+						<div class="col-md-6">
+							<h5>Prospect Table</h5>
+						</div>
+						<div class="col-md-6 text-end">
+						   <div class="form-group me-0"></div>
+						   <a class="btn btn-primary" href="{{ route('prospect.create') }}"> <i data-feather="plus-square"> </i>Create New Project</a>
+						</div>
+					</div> --}}
 				</div>
 				<div class="card-body">
 					<div class="row mb-5">
@@ -35,7 +48,7 @@
 									<div class="col-12 col-lg-3 table-filters pb-0 ">
 										<div class="filter-container">
 											<label class="control-label">Project</label>
-											<select id="project" class="select2 form-control" name="project_id" onchange="refreshDatatable()">
+											<select id="project" class="js-example-disabled-results" name="project" onchange="refreshDatatable()">
 												<option value="">All</option>
 												@foreach ($project as $item)
 												<option value="{{$item->id}}">{{$item->kode_project}} - {{$item->nama_project}}</option>
@@ -46,7 +59,7 @@
 									<div class="col-12 col-lg-3 table-filters ">
 										<div class="filter-container">
 											<label class="control-label">Agent</label>
-											<select id="agent" class="select2 form-control" name="agent_id"  onchange="refreshDatatable()">
+											<select id="agent" class="js-example-disabled-results" name="agent"  onchange="refreshDatatable()">
 												<option value="">All</option>
 											</select>
 										</div>
@@ -54,7 +67,7 @@
 									<div class="col-12 col-lg-3 table-filters ">
 										<div class="filter-container">
 											<label class="control-label">Sales</label>
-											<select id="sales" class="select2 form-control" name="sales_id"  onchange="refreshDatatable()">
+											<select id="sales" class="js-example-disabled-results" name="sales"  onchange="refreshDatatable()">
 												<option value="">All</option>
 											</select>
 										</div>
@@ -62,7 +75,7 @@
 									<div class="col-12 col-lg-3 table-filters ">
 										<div class="filter-container">
 											<label class="control-label">Platform</label>
-											<select id="platform" class="select2 form-control" name="Platform"  onchange="refreshDatatable()">
+											<select id="platform" class="js-example-disabled-results" name="platform"  onchange="refreshDatatable()">
 												<option value="">All</option>
 												@foreach ($platform as $item)
 												<option value="{{$item->id}}">{{$item->nama_platform}}</option>
@@ -75,7 +88,7 @@
 									<div class="col-12 col-lg-3 table-filters pb-0 ">
 										<div class="filter-container">
 											<label class="control-label">Source</label>
-											<select id="source" class="select2 form-control" name="source"  onchange="refreshDatatable()">
+											<select id="source" class="js-example-disabled-results" name="source"  onchange="refreshDatatable()">
 												<option value="">All</option>
 												@foreach ($source as $item)
 												<option value="{{$item->id}}">{{$item->nama_sumber}}</option>
@@ -86,7 +99,7 @@
 									<div class="col-12 col-lg-3 table-filters pb-0 ">
 										<div class="filter-container">
 											<label class="control-label">Status</label>
-											<select id="status" onchange="refreshDatatable()" class="select2 form-control" name="status">
+											<select id="status" onchange="refreshDatatable()" class="js-example-disabled-results" name="status">
 												<option value="">All</option>
 												@foreach ($status as $item)
 												<option value="{{$item->id}}">{{$item->status}}</option>
@@ -97,10 +110,10 @@
 									<div class="col-12 col-lg-3 table-filters pb-0 ">
 										<div class="filter-container">
 											<label class="control-label">Level</label>
-											<select id="role" class="select2 form-control" name="level"  onchange="refreshDatatable()">
+											<select id="role" class="js-example-disabled-results" name="role_by"  onchange="refreshDatatable()">
 												<option value="">All</option>
-												<option value="Auto System">Makuta</option>
-												<option value="Sales">Sales</option>
+												<option value="4">Makuta</option>
+												<option value="6">Sales</option>
 											</select>
 										</div>
 									</div>
@@ -138,7 +151,7 @@
 									<th>Input Date</th>
 									<th>Process Date</th>
 									{{-- <th>Closing</th> --}}
-									{{-- <th>Action</th> --}}
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tfoot>
@@ -155,7 +168,7 @@
 									<th>Input Date</th>
 									<th>Process Date</th>
 									{{-- <th>Closing</th> --}}
-									{{-- <th>Action</th> --}}
+									<th>Action</th>
 								</tr>
 							</tfoot>
 						</table>
@@ -170,6 +183,9 @@
 @section('script')
 <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>
+
+<script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
+<script src="{{asset('assets/js/select2/select2-custom.js')}}"></script>
 
 <script>
 	function refreshDatatable(){
@@ -238,6 +254,23 @@
 				//     }
 				// },
 				{ data: 'accept_at' },
+				{
+					mRender: function(data,type,row){
+						return `
+							<td class="text-center">
+								<div class="d-flex justify-content-start">
+									<a href=""><button class="btn btn-pill btn-outline-primary" style="border-radius:5px"><i class="fa fa-eye" style="color:#7366ff"></i></button></a>
+									<form action="" method="post" onsubmit="return confirm('Apakah anda yakin ?')">
+										@method('delete')
+										@csrf
+										<button class="btn btn-rounded mx-2" style="background-color: #8A0512; color :#fff;" type="submit"><i class="fa fa-trash"></i></button>
+									</form>
+									<a href=""><button class="btn btn-outline-primary history" style="background-color: #fb8c2e;color:#fff;" data-modal="" ><i class="fa fa-history"></i></button></a>
+								</div>
+							</td>
+						`
+					}
+				}
 			],
 			"deferRender": true,
 		});

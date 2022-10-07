@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Agent;
 use App\Models\Pt;
 use App\Models\HistoryProspect;
 use Illuminate\Http\Request;
 use App\Http\Traits\GlobalTrait;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -100,8 +102,10 @@ class ProjectController extends Controller
      */
      public function show(Project $project)
     {
-        
-        return view('pages.project.show', compact('project'));
+        $agent = Agent::where('project_id',$project->id)->get();
+        $status = DB::table('status')->get();
+
+        return view('pages.project.show', compact('project','agent','status'));
     }
 
     /**
@@ -143,13 +147,39 @@ class ProjectController extends Controller
 
     public function get_prospect(Request $request){
          // return($request->search);
-        $query = HistoryProspect::all_leads();
+        $query = HistoryProspect::all_leads()->where('prospect.nama_prospect','like','%'.$request->search['value'].'%');
+
         if($request->project != ""){
             $query = $query->where('history_prospect.project_id','=',$request->project);
         }
+        if($request->agent != ""){
+            $query = $query->where('history_prospect.agent_id','=',$request->agent);
+        }
+        if($request->sales != ""){
+            $query = $query->where('history_prospect.sales_id','=',$request->sales);
+        }
+        if($request->status != ""){
+            $query = $query->where('prospect.status_id','=',$request->status);
+        }
+
+        $field = [
+            'prospect.id',
+            'prospect.nama_prospect',
+            'sumber_data.nama_sumber',
+            'sumber_platform.nama_platform',
+            'campaign.nama_campaign',
+            'project.nama_project',
+            'agent.nama_agent',
+            'status.status',
+            'prospect.created_at',
+            'history_prospect.accept_at'
+            ];
+
+        $query = $query->orderBy($field[$request->order[0]['column']],$request->order[0]['dir']);
+
         $data = [
             'draw' => $request->draw,
-            // 'recordsTotal' => HistoryProspect::total_leads()->count(),
+            'recordsTotal' => HistoryProspect::total_leads()->count(),
             // nampilin count data
             'recordsFiltered' => $query->count(),
             // nampilin semua data 

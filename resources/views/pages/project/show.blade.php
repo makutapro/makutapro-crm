@@ -3,6 +3,7 @@
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
 @endsection
 
 @section('style')
@@ -58,6 +59,38 @@
 					<span>For move between Project. Filter first, then select leads and project which you want to move.</span>
                 </div>
                 <div class="card-body">
+					<div class="row mb-4">
+						<div class="col-12 col-lg-3 table-filters ">
+							<div class="filter-container">
+								{{-- <label class="control-label" style="color: grey">Select Agent</label> --}}
+								<select id="agent" class="js-example-disabled-results" name="agent"  onchange="refreshDatatable()">
+									<option value="">Select Agent</option>
+									@foreach ($agent as $item)
+										<option value="{{$item->id}}">{{$item->nama_agent}}</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
+						<div class="col-12 col-lg-3 table-filters ">
+							<div class="filter-container">
+								{{-- <label class="control-label">Select Sales</label> --}}
+								<select id="sales" class="js-example-disabled-results" name="sales"  onchange="refreshDatatable()">
+									<option value="">Select Sales</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-12 col-lg-3 table-filters ">
+							<div class="filter-container">
+								{{-- <label class="control-label">Select Status</label> --}}
+								<select id="status" class="js-example-disabled-results" name="status"  onchange="refreshDatatable()">
+									<option value="">Select Status</option>
+									@foreach ($status as $item)
+									<option value="{{$item->id}}">{{$item->status}}</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
+					</div>
 					<div class="table-responsive">
 						<table class="display datatables" id="prospect-project-datatable">
 							<thead>
@@ -80,7 +113,9 @@
 							<tfoot>
 								<tr>
 									{{-- <th>No</th> --}}
-									<th>ID</th>
+									<th>
+										ID
+									</th>
 									<th>Nama & No Hp</th>
 									<th>Source</th>
 									<th>Plarform</th>
@@ -106,5 +141,118 @@
 @section('script')
 <script src="{{asset('assets/js/form-validation-custom.js')}}"></script><script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>
+
+<script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
+<script src="{{asset('assets/js/select2/select2-custom.js')}}"></script>
+<script>
+	function refreshDatatable(){
+		$('#prospect-project-datatable').DataTable({
+			"serverSide": true,
+			"destroy": true,
+			"order" : [[0, 'desc']],
+			"ajax": {
+				"url": "prospect",
+				"data": {
+					"project": $("#project").val(),
+					"agent": $("#agent").val(),
+					"sales": $("#sales").val(),
+					"status": $("#status").val(),
+				}
+			},
+			"columns": [
+				// {
+				//     mRender: function(data, type, row) {
+				//         if (row.status == '2') {
+				//             return `
+				//             <span class='bg-red' style='border-left: red solid 2px;'>
+				//                 ${row.status}
+				//             </span>`;
+				//         } else {
+				//             return `<span class='bg-blue'> ${row.status}</span>`;
+				//         }
+
+				//     }
+				// },
+				{ data: 'id' },
+				{
+					mRender: function(data, type, row) {
+						return `
+							<span>${row.nama_prospect}</span><br><a href='https://api.whatsapp.com/send?phone=${row.kode_negara.substring(1)}${row.hp.substring(1)}' target='_blank'><span class='card-subtitle' style='color:#6F9CD3'>${row.hp}</span></a>
+						`
+					}
+				},
+				{ data: 'nama_sumber' },
+				{ data: 'nama_platform' },
+				{ data: 'nama_campaign' },
+				{ data: 'nama_project' },
+				{
+					mRender: function(data, type, row) {
+						return `
+						<span style="color:#6F9CD3">${row.kode_agent}</span><br><span class="card-subtitle">${row.nama_sales}</span>
+						`
+					}
+				},
+				{
+					mRender: function(data, type, row) {
+						return `
+						${row.status}<br><small class="card-subtitle" style="font-size: 11px;">${row.alasan != null ? row.alasan : ''}</small>
+						`
+					}
+				},
+				{ data: 'created_at' },
+				// {
+				//     mRender: function(data, type, row) {
+				//         return moment(row.created_at).format("d-m-y")
+				//     }
+				// },
+				{ data: 'accept_at' },
+				// {
+				// 	mRender: function(data,type,row){
+				// 		return `
+				// 			<td class="text-center">
+				// 				<div class="d-flex justify-content-start">
+				// 					<a href=""><button class="btn btn-pill btn-outline-primary" style="border-radius:5px"><i class="fa fa-eye" style="color:#7366ff"></i></button></a>
+				// 					<form action="" method="post" onsubmit="return confirm('Apakah anda yakin ?')">
+				// 						@method('delete')
+				// 						@csrf
+				// 						<button class="btn btn-rounded mx-2" style="background-color: #8A0512; color :#fff;" type="submit"><i class="fa fa-trash"></i></button>
+				// 					</form>
+				// 					<a href=""><button class="btn btn-outline-primary history" style="background-color: #fb8c2e;color:#fff;" data-modal="" ><i class="fa fa-history"></i></button></a>
+				// 				</div>
+				// 			</td>
+				// 		`
+				// 	}
+				// }
+			],
+			"deferRender": true,
+		});
+	}
+
+	refreshDatatable();
+
+	$('#agent').change(function(){
+            var agent = $(this).val();
+            if(agent){
+                $.ajax({
+                type:"GET",
+                url:"/getsales?agent="+agent,
+                dataType: 'JSON',
+                success:function(res){
+                    if(res){
+                        $("#sales").empty();
+                        $("#sales").append('<option value="">All</option>');
+                        $.each(res,function(sales_id,nama_sales){
+                            $("#sales").append('<option value="'+sales+'">'+nama_sales+'</option>');
+                        });
+                    }else{
+                    $("#sales").empty();
+                    }
+                }
+                });
+            }else{
+                $("#sales").empty();
+            }
+        });
+</script>
 
 @endsection

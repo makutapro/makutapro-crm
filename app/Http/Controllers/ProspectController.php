@@ -28,10 +28,29 @@ class ProspectController extends Controller
     }
 
     public function get_all(Request $request){
-        // return($request->search);
-        $query = HistoryProspect::all_leads() ->where('prospect.nama_prospect','like','%'.$request->search['value'].'%');
+        
+        $query = HistoryProspect::all_leads()->where('prospect.nama_prospect','like','%'.$request->search['value'].'%');
+
         if($request->project != ""){
             $query = $query->where('history_prospect.project_id','=',$request->project);
+        }
+        if($request->agent != ""){
+            $query = $query->where('history_prospect.agent_id','=',$request->agent);
+        }
+        if($request->sales != ""){
+            $query = $query->where('history_prospect.sales_id','=',$request->sales);
+        }
+        if($request->platform != ""){
+            $query = $query->where('prospect.sumber_platform_id','=',$request->platform);
+        }
+        if($request->source != ""){
+            $query = $query->where('prospect.sumber_data_id','=',$request->source);
+        }
+        if($request->status != ""){
+            $query = $query->where('prospect.status_id','=',$request->status);
+        }
+        if($request->role != ""){
+            $query = $query->where('prospect.role_by','=',$request->role);
         }
         if($request->since != ""){
             $query = $query->where('prospect.created_at','>=',$request->since);
@@ -43,23 +62,23 @@ class ProspectController extends Controller
         $field = [
             'prospect.id',
             'prospect.nama_prospect',
-            'sumber_data.nama_sumber'
-            // 'sumber_platform_id',
-            // 'campaign_id',
-            // 'project_id',
+            'sumber_data.nama_sumber',
+            'sumber_platform.nama_platform',
+            'campaign.nama_campaign',
+            'project.nama_project',
+            'agent.nama_agent',
+            'status.status',
+            'prospect.created_at',
+            'history_prospect.accept_at'
             ];
+
         $query = $query->orderBy($field[$request->order[0]['column']],$request->order[0]['dir']);
-        // if($request->status != ""){
-        //     $query = $query->where();
-        // }
-        // if($request->status != ""){
-        //     $query = $query->where();
-        // }
-        
+
         $data = [
             'draw' => $request->draw,
-            // 'recordsTotal' => HistoryProspect::total_leads()->count(),
-            // nampilin count data
+            // nampilin count data total
+            'recordsTotal' => HistoryProspect::total_leads()->count(),
+            // nampilin count data terfilter
             'recordsFiltered' => $query->count(),
             // nampilin semua data 
             'data' => $query->skip($request->start)->take($request->length)->get()
