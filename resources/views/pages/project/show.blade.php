@@ -242,7 +242,7 @@
                         $("#sales").empty();
                         $("#sales").append('<option value="">All</option>');
                         $.each(res,function(sales_id,nama_sales){
-                            $("#sales").append('<option value="'+sales+'">'+nama_sales+'</option>');
+                            $("#sales").append('<option value="'+sales_id+'">'+nama_sales+'</option>');
                         });
                     }else{
                     $("#sales").empty();

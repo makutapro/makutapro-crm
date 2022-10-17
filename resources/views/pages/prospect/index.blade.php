@@ -4,6 +4,8 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/date-picker.css')}}">
 @endsection
 
 @section('style')
@@ -21,6 +23,24 @@
 @section('content')
 <div class="container-fluid">
 	<div class="row">
+		<div class="col-md-12 project-list">
+		   <div class="card">
+			  <div class="row">
+				 <div class="col-md-6">
+					<div class="left-header col horizontal-wrapper ps-0">
+						<ul class="horizontal-menu">
+							<li class="mega-menu outside"><a class="nav-link" href="#!"><i data-feather="download"></i><span>Download Excel</span></a></li>
+						</ul>
+					</div>
+				 </div>
+				 <div class="col-md-6">
+					<div class="form-group mb-0 me-0"></div>
+					<a class="btn btn-primary" href="{{ route('prospect.create') }}"> <i data-feather="plus-square"> </i>Add Manual</a>
+					<a class="btn btn-primary" href="{{ route('prospect.create') }}"> <i data-feather="plus-square"> </i>Add New</a>
+				 </div>
+			  </div>
+		   </div>
+		</div>
 		<!-- Ajax Deferred rendering for speed start-->
 		<div class="col-sm-12">
 			<div class="card">
@@ -87,6 +107,20 @@
 								<div class="row">
 									<div class="col-12 col-lg-3 table-filters pb-0 ">
 										<div class="filter-container">
+											<div class="row">
+												<div class="col-6">
+													<label class="control-label">Since:</label>
+													<input class="form-control form-control-sm datepicker-here " name="dateSince" id="since" type="text" data-language="en" onchange="refreshDatatable()">
+												</div>
+												<div class="col-6">
+													<label class="control-label">To:</label>
+													<input class="form-control form-control-sm datepicker-here " name="dateTo" id="to" type="text" data-language="en" onchange="refreshDatatable()">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-lg-3 table-filters pb-0 ">
+										<div class="filter-container">
 											<label class="control-label">Source</label>
 											<select id="source" class="js-example-disabled-results" name="source"  onchange="refreshDatatable()">
 												<option value="">All</option>
@@ -115,20 +149,6 @@
 												<option value="4">Makuta</option>
 												<option value="6">Sales</option>
 											</select>
-										</div>
-									</div>
-									<div class="col-12 col-lg-3 table-filters pb-0 ">
-										<div class="filter-container">
-											<div class="row">
-												<div class="col-6">
-													<label class="control-label">Since:</label>
-													<input class="form-control form-control-sm datetimepicker" name="dateSince" data-min-view="2" data-date-format="yyyy-mm-dd" autocomplete="off" id="since" type="date"  onchange="refreshDatatable()">
-												</div>
-												<div class="col-6">
-													<label class="control-label">To:</label>
-													<input class="form-control form-control-sm datetimepicker" name="dateTo" data-min-view="2" data-date-format="yyyy-mm-dd" autocomplete="off" id="to" type="date"  onchange="refreshDatatable()">
-												</div>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -186,6 +206,10 @@
 
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/js/select2/select2-custom.js')}}"></script>
+
+<script src="{{asset('assets/js/datepicker/date-picker/datepicker.js')}}"></script>
+<script src="{{asset('assets/js/datepicker/date-picker/datepicker.en.js')}}"></script>
+<script src="{{asset('assets/js/datepicker/date-picker/datepicker.custom.js')}}"></script>
 
 <script>
 	function refreshDatatable(){
@@ -314,7 +338,7 @@
                         $("#sales").empty();
                         $("#sales").append('<option value="">All</option>');
                         $.each(res,function(sales_id,nama_sales){
-                            $("#sales").append('<option value="'+sales+'">'+nama_sales+'</option>');
+                            $("#sales").append('<option value="'+sales_id+'">'+nama_sales+'</option>');
                         });
                     }else{
                     $("#sales").empty();

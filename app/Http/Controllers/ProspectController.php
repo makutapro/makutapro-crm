@@ -94,7 +94,7 @@ class ProspectController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.prospect.create');
     }
 
     /**
