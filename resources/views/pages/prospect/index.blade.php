@@ -22,8 +22,19 @@
 
 @section('breadcrumb-items')
 <li class="breadcrumb-item">Data Tables</li>
-<li class="breadcrumb-item active">Ajax DataTables</li>
+<li class="breadcrumb-item active">Prospect List</li>
 @endsection
+
+<div class="loader-wrapper" id="loader-wrapper">
+	<div class="loader-index"><span></span></div>
+	<svg>
+	  <defs></defs>
+	  <filter id="goo">
+		<fegaussianblur in="SourceGraphic" stddeviation="11" result="blur"></fegaussianblur>
+		<fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"> </fecolormatrix>
+	  </filter>
+	</svg>
+  </div>
 
 @section('content')
 <div class="container-fluid">
@@ -264,6 +275,16 @@
 </script>
 
 <script>
+	function showLoading(){
+		// let loader = document.querySelector(".loader-wrapper")
+		// loader.style.display = "block"
+		document.getElementById('loader-wrapper').style.display = 'block';
+	}
+	function hideLoading(){
+		// let loader = document.querySelector(".loader-wrapper")
+		// loader.style.display = "none"
+		document.getElementById('loader-wrapper').style.display = 'none';
+	}
 	function refreshDatatable(){
 		$('#prospect-datatable').DataTable({
         	"scrollX": true,
@@ -282,6 +303,9 @@
 					"role": $("#role").val(),
 					"since": $("#since").val(),
 					"to": $("#to").val(),
+				},
+				"success": function(){
+					hideLoading()
 				}
 			},
 			"columns": [
@@ -441,6 +465,13 @@
 	}
 
 	refreshDatatable();
+	showLoading();
+
+	$('.loader-wrapper').bind('ajaxStart', function(){
+		$(this).show();
+	}).bind('ajaxStop', function(){
+		$(this).hide();
+	});
 
 	$("#checkAllProspect").change(function(){
 		$('input:checkbox').not(this).prop('checked', this.checked);
