@@ -304,9 +304,9 @@
 					"since": $("#since").val(),
 					"to": $("#to").val(),
 				},
-				"success": function(){
-					hideLoading()
-				}
+				// "success": function(){
+				// 	hideLoading()
+				// }
 			},
 			"columns": [
 				// {
@@ -465,7 +465,7 @@
 	}
 
 	refreshDatatable();
-	showLoading();
+	// showLoading();
 
 	$('.loader-wrapper').bind('ajaxStart', function(){
 		$(this).show();
