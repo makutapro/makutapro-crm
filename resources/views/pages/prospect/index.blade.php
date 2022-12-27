@@ -6,6 +6,11 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/date-picker.css')}}">
+<style>
+	.unverified{
+		background-color: #c9c9c91e
+	}
+</style>
 @endsection
 
 @section('style')
@@ -35,8 +40,9 @@
 				 </div>
 				 <div class="col-md-6">
 					<div class="form-group mb-0 me-0"></div>
-					<a class="btn btn-primary" href="{{ route('prospect.create') }}"> <i data-feather="plus-square"> </i>Add Manual</a>
-					<a class="btn btn-primary" href="{{ route('prospect.create') }}"> <i data-feather="plus-square"> </i>Add New</a>
+					<a class="btn btn-info px-2" onclick="moveProspect()"> <i data-feather="move"> </i>Move Prospect</a>
+					{{-- <a class="btn btn-primary px-2" href="{{ route('prospect.create') }}"> <i data-feather="plus-square"> </i>Add Manual</a> --}}
+					<a class="btn btn-primary px-2" href="{{ route('prospect.create') }}" id="addButton"> <i data-feather="plus-square"> </i>Add New</a>
 				 </div>
 			  </div>
 		   </div>
@@ -44,23 +50,23 @@
 		<!-- Ajax Deferred rendering for speed start-->
 		<div class="col-sm-12">
 			<div class="card">
-				<div class="card-header">
-					<h5 >Prospect Table</h5>
-					{{-- <div class="d-flex justify-content-end">
-						<a class="btn btn-primary" href="{{ route('prospect.create') }}"> <i data-feather="plus-square"> </i>Create New Project</a>
-					</div> --}}
-					{{-- <div class="row">
-						<div class="col-md-6">
-							<h5>Prospect Table</h5>
-						</div>
-						<div class="col-md-6 text-end">
-						   <div class="form-group me-0"></div>
-						   <a class="btn btn-primary" href="{{ route('prospect.create') }}"> <i data-feather="plus-square"> </i>Create New Project</a>
-						</div>
-					</div> --}}
+				<div class="card-header d-flex justify-content-between">
+					<div class="col">
+						<h5 >Prospect Table</h5>
+						<span style="color: rgba(43, 43, 43, 0.7);font-size: 12px; display:block; margin-top: 5px; letter-spacing: 1px;">List of All Leads</span>
+					</div>
+					@if (session('alert'))
+					<div class="col-4">
+						<div class="alert alert-primary outline alert-dismissible fade show" role="alert">
+							<i data-feather="check"></i>
+							<span>Updated changes successfully</span>
+							<button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+						 </div>
+					</div>
+					@endif
 				</div>
 				<div class="card-body">
-					<div class="row mb-5">
+					<div class="row mb-5" id="AllRow">
 						<div class="col-12">
 							<form action="{{url('prospects')}}" method="POST" role="form">
 								@csrf
@@ -155,11 +161,47 @@
 							</form>
 						</div>
 					</div>
+					{{-- <div class="row mb-5" id="MoveRow">
+						<div class="col-12">
+							<div class="row mb-4">
+								<div class="col-12 col-lg-3 table-filters pb-0 ">
+									<div class="filter-container">
+										<label class="control-label">Project</label>
+										<select id="project" class="js-example-disabled-results" name="project" onchange="refreshDatatable()">
+											<option value="">All</option>
+											@foreach ($project as $item)
+											<option value="{{$item->id}}">{{$item->kode_project}} - {{$item->nama_project}}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+								<div class="col-12 col-lg-3 table-filters ">
+									<div class="filter-container">
+										<label class="control-label">Agent</label>
+										<select id="agent" class="js-example-disabled-results" name="agent"  onchange="refreshDatatable()">
+											<option value="">All</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-12 col-lg-3 table-filters ">
+									<div class="filter-container">
+										<label class="control-label">Sales</label>
+										<select id="sales" class="js-example-disabled-results" name="sales"  onchange="refreshDatatable()">
+											<option value="">All</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> --}}
 					<div class="table-responsive">
 						<table class="display datatables" id="prospect-datatable">
 							<thead>
 								<tr>
-									{{-- <th>No</th> --}}
+									{{-- <th id="thCheckMove" style="display:none">
+										<input class="form-check-input m-0" style="height:20px;" id="checkAllProspect" type="checkbox">
+									</th> --}}
+									<th>No</th>
 									<th>ID</th>
 									<th>Nama & No Hp</th>
 									<th>Source</th>
@@ -176,7 +218,8 @@
 							</thead>
 							<tfoot>
 								<tr>
-									{{-- <th>No</th> --}}
+									{{-- <th id="tfCheckMove" style="display:none"></th> --}}
+									<th>No</th>
 									<th>ID</th>
 									<th>Nama & No Hp</th>
 									<th>Source</th>
@@ -210,10 +253,20 @@
 <script src="{{asset('assets/js/datepicker/date-picker/datepicker.js')}}"></script>
 <script src="{{asset('assets/js/datepicker/date-picker/datepicker.en.js')}}"></script>
 <script src="{{asset('assets/js/datepicker/date-picker/datepicker.custom.js')}}"></script>
+<script src="{{asset('js/custom.js')}}"></script>
+<script>
+    // alert 
+    window.setTimeout(function() {
+    $(".alert").fadeTo(200, 0).slideUp(200, function(){
+        $(this).remove(); 
+    });
+    }, 5000);
+</script>
 
 <script>
 	function refreshDatatable(){
 		$('#prospect-datatable').DataTable({
+        	"scrollX": true,
 			"serverSide": true,
 			"destroy": true,
 			"order" : [[0, 'desc']],
@@ -233,18 +286,13 @@
 			},
 			"columns": [
 				// {
-				//     mRender: function(data, type, row) {
-				//         if (row.status == '2') {
-				//             return `
-				//             <span class='bg-red' style='border-left: red solid 2px;'>
-				//                 ${row.status}
-				//             </span>`;
-				//         } else {
-				//             return `<span class='bg-blue'> ${row.status}</span>`;
-				//         }
-
-				//     }
+				// 	mRender: function(data, type, row){
+				// 		return `<input class="form-check-input m-0" style="height:20px;" name="prospect_id[]" value="${row.id}" type="checkbox" style="display:none" id="checkMove">`
+				// 	}
 				// },
+				{ mRender: function(data, type, row, meta) {
+						return meta.row + 1
+					}},
 				{ data: 'id' },
 				{
 					mRender: function(data, type, row) {
@@ -255,7 +303,26 @@
 				},
 				{ data: 'nama_sumber' },
 				{ data: 'nama_platform' },
-				{ data: 'nama_campaign' },
+				{ 
+					mRender: function(data, type, row) {
+
+						if(row.nama_campaign == null)
+							row.nama_campaign = ''
+						if(row.utm_source == null)
+							row.utm_source = ''
+						if(row.utm_medium == null)
+							row.utm_medium = ''
+						else
+							row.utm_medium = ' / '+row.utm_medium
+						if(row.utm_campaign == null)
+							row.utm_campaign = ''
+						else
+							row.utm_campaign = ' / '+row.utm_campaign
+						return `
+							<span>`+row.nama_campaign+`</span><br><span class='card-subtitle' style='font-size: 9px;color: grey;'>${row.utm_source}${row.utm_medium}${row.utm_campaign}</span>
+						`
+					}
+				},
 				{ data: 'nama_project' },
 				{
 					mRender: function(data, type, row) {
@@ -266,88 +333,124 @@
 				},
 				{
 					mRender: function(data, type, row) {
+						if(row.status_id == 1)
+							var st= `new`
+						if(row.status_id == 2)
+							var st= `cold`
+						if(row.status_id == 3)
+							var st= `warm`
+						if(row.status_id == 4)
+							var st= `hot`
+						if(row.status_id == 5)
+							var st= `closing`
+						if(row.status_id == 6)
+							var st= `not-interest`
+						if(row.status_id == 7)
+							var st= `expired`
+						
 						return `
-						${row.status}<br><small class="card-subtitle" style="font-size: 11px;">${row.alasan != null ? row.alasan : ''}</small>
+						<span class="span badge rounded-pill pill-badge-${st} text-light">${row.status}</span><br><small class="card-subtitle" style='font-size: 9px;color: grey;'>${row.alasan != null ? row.alasan : ''}</small>
 						`
 					}
 				},
-				{ data: 'created_at' },
-				// {
-				//     mRender: function(data, type, row) {
-				//         return moment(row.created_at).format("d-m-y")
-				//     }
-				// },
-				{ data: 'accept_at' },
+				{
+				    mRender: function(data, type, row) {
+						var date = new Date(row.created_at);
+						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+						var ver_date = new Date(row.verified_at)
+
+						return `<small class="card-subtitle" style='font-size: 11px;color: #020202;'>`+ date.getHours()+':'+date.getMinutes() +' '+ date.getDate() + ' ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`</small><br><small class="card-subtitle" style="font-size: 9px;color:#484848">${row.verified_at == "0000-00-00 00:00:00" || row.verified_at == null ? "" : "Verified at "+ ver_date.getHours()+':'+ver_date.getMinutes() +' '+ ver_date.getDate() + ' ' + monthNames[ver_date.getMonth()] + ' '+ ver_date.getFullYear().toString().substring(2)}`+`</small>`;
+				    }
+				},
+				{
+				    mRender: function(data, type, row) {
+						var date = new Date(row.accept_at);
+						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+						var process_date = '';
+
+						if(row.accept_at != null && row.accept_at != '0000-00-00 00:00:00')
+							 process_date = `<small class="card-subtitle" style='font-size: 11px;color: #020202;'>`+ date.getHours()+':'+date.getMinutes() +' '+ date.getDate() + ' ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`</small>`;
+
+						return process_date;
+				    }
+				},
 				{
 					mRender: function(data,type,row){
-						return `
-							<td class="text-center">
-								<div class="d-flex justify-content-start">
-									<a href=""><button class="btn btn-pill btn-outline-primary" style="border-radius:5px"><i class="fa fa-eye" style="color:#7366ff"></i></button></a>
-									<form action="" method="post" onsubmit="return confirm('Apakah anda yakin ?')">
+						var btn_detail = `<a href="prospect/${row.id}"><img src="{{asset('assets/images/button/info.png')}}" class="me-2" alt="info"></a>`
+						var btn_delete = `<form action="" method="post" onsubmit="return confirm('Apakah anda yakin ?')">
 										@method('delete')
 										@csrf
-										<button class="btn btn-rounded mx-2" style="background-color: #8A0512; color :#fff;" type="submit"><i class="fa fa-trash"></i></button>
-									</form>
-									<a href=""><button class="btn btn-outline-primary history" style="background-color: #fb8c2e;color:#fff;" data-modal="" ><i class="fa fa-history"></i></button></a>
-								</div>
-							</td>
-						`
+										<button class="btn" style="background: url('assets/images/button/trash.png') no-repeat; width:100%;height:100%;" type="submit"></button>
+									</form>`
+						var btn_history = `<a href=""><img class="me-2" src="{{asset('assets/images/button/history.png')}}" alt="History"></a>`
+						var btn_verified = `<a title="Verified ?"><img src="{{asset('assets/images/button/verified.png')}}" class="me-2" alt="Verified ?"></a>`
+						var btn_note = `<a title="Note" data-bs-toggle="modal" data-bs-target="#detail${row.id}"><img src="{{asset('assets/images/button/notes.png')}}" class="me-2" alt="Note"></a>
+								<div class="modal fade" id="detail${row.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+									   <div class="modal-content"  style="border-radius: 20px;">
+										  <div class="modal-header" style="background-color: #6F9CD3; border-top-left-radius: 20px;border-top-right-radius: 20px;">
+											<h2 class="modal-title text-white" style="font-family: Montserrat ,
+											sans-serif Medium 500; font-size: 25px;"><strong>MAKUTA</strong> Pro</h2>
+											 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+										  </div>
+											<div class="modal-body form">
+												<div class="row">
+													<h6>Note From Sales</h6>
+													<p class="mt-2 ms-2" style="color: #827575">${row.catatan_sales}</p>
+												</div>
+											</div>
+									   </div>
+									</div>
+								</div>`
+						if (row.catatan_sales != null){
+							return `
+								<td class="text-center">
+									<div class="d-flex justify-content-start">`
+										+btn_detail+btn_history+btn_note+btn_delete+`
+									</div>
+								</td>
+							`
+						}
+						if (row.verified_status == 0) {
+							return `
+								<td class="text-center">
+									<div class="d-flex justify-content-start">`
+										+btn_verified+btn_delete+`
+									</div>
+								</td>
+							`
+						}else{
+							return `
+								<td class="text-center">
+									<div class="d-flex justify-content-start">`
+										+btn_detail+btn_history+btn_delete+`
+									</div>
+								</td>
+							`
+						}
 					}
 				}
 			],
+			"createdRow": function( row, data, dataIndex ) {
+							if ( data["verified_status"] == false ) {
+								// $(row).css('background-color','#01bdf11e');
+							}
+						},
 			"deferRender": true,
 		});
 	}
 
 	refreshDatatable();
-	
-	$('#project').change(function(){
-		var project = $(this).val();
-		if(project){
-			$.ajax({
-			type:"GET",
-			url:"/get_agent?project="+project,
-			dataType: 'JSON',
-			success:function(res){
-				if(res){
-					$("#agent").empty();
-					$("#agent").append('<option value="">All</option>');
-					$.each(res,function(agent_id,nama_agent){
-						$("#agent").append('<option value="'+agent_id+'">'+nama_agent+'</option>');
-					});
-				}else{
-				$("#agent").empty();
-				}
-			}
-			});
-		}else{
-			$("#agent").empty();
-		}
+
+	$("#checkAllProspect").change(function(){
+		$('input:checkbox').not(this).prop('checked', this.checked);
 	});
 
-	$('#agent').change(function(){
-            var agent = $(this).val();
-            if(agent){
-                $.ajax({
-                type:"GET",
-                url:"/getsales?agent="+agent,
-                dataType: 'JSON',
-                success:function(res){
-                    if(res){
-                        $("#sales").empty();
-                        $("#sales").append('<option value="">All</option>');
-                        $.each(res,function(sales_id,nama_sales){
-                            $("#sales").append('<option value="'+sales_id+'">'+nama_sales+'</option>');
-                        });
-                    }else{
-                    $("#sales").empty();
-                    }
-                }
-                });
-            }else{
-                $("#sales").empty();
-            }
-        });
+	function moveProspect(){
+		document.getElementById('AllRow').style.display = 'none';
+		document.getElementById('MoveRow').style.display = 'blok';
+	}
+	
+	
 </script>
 @endsection

@@ -12,6 +12,7 @@
  :root {
     --theme-deafult: #588ac7;
     --theme-secondary: #f73164;
+    --status-new: #01BCF1;
 }
 
 .font-roboto {
@@ -912,7 +913,7 @@
 }
 
 .font-primary {
-    color: #7366ff !important;
+    color: #7366ff !important; 
 }
 
 .font-secondary {
@@ -3881,6 +3882,63 @@ strong~p {
     width: 10px;
     height: 10px;
     padding-top: 3px;
+}
+
+
+.pill-badge-new {
+    background-color: #01BCF1;
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(1, 188, 241, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(1, 188, 241, 0.25);
+    color: #fff;
+    border-radius: 0;
+}
+
+.pill-badge-cold {
+    background-color: #277A95;
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(39, 122, 149, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(39, 122, 149, 0.25);
+    color: #fff;
+    border-radius: 0;
+}
+
+.pill-badge-warm {
+    background-color: #FDB427;
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(253, 180, 39, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(253, 180, 39, 0.25);
+    color: #fff;
+    border-radius: 0;
+}
+
+.pill-badge-hot {
+    background-color: #6E398B;
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(110, ​57, 139, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(110, ​57, 139, 0.25);
+    color: #fff;
+    border-radius: 0;
+}
+
+.pill-badge-not-interest {
+    background-color: #C51212;
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(197, ​18, ​18, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(197, ​18, ​18, 0.25);
+    color: #fff;
+    border-radius: 0;
+}
+
+.pill-badge-closing {
+    background-color: #77B341;
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(119, 179, ​65, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(119, 179, ​65, 0.25);
+    color: #fff;
+    border-radius: 0;
+}
+
+.pill-badge-expired {
+    background-color: #F38120;
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(243, 129, ​32, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(243, 129, ​32, 0.25);
+    color: #fff;
+    border-radius: 0;
 }
 
 .pill-badge-primary {

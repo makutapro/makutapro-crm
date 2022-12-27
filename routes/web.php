@@ -6,6 +6,10 @@ use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\DemografiController;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\CampaignController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +25,18 @@ use App\Http\Controllers\SalesController;
 //     return view('pages.index');
 // })->middleware(['auth'])->name('/');
 
+// Route::match(['get', 'post'], '/', [DashboardController::class, 'index'])->name('/');
+
+// Route::get('prospect/getall', [ProspectController::class, 'get_all'])->name('prospect.all');
+// Route::get('project/prospect', [ProjectController::class, 'get_prospect'])->name('project.prospect');
+// Route::resource('prospect', ProspectController::class);
+// Route::resource('project', ProjectController::class);
+// Route::resource('agent', AgentController::class);
+// Route::resource('sales', SalesController::class);
+
+// Route::get('/getsales', [AgentController::class, 'getSales'])->name('agent.getsales');
+// Route::get('/get_agent', [AgentController::class, 'get_agent'])->name('agent.getagent');
+
 Route::match(['get', 'post'], '/', [DashboardController::class, 'index'])->name('/')->middleware(['auth']);
 
 Route::get('prospect/getall', [ProspectController::class, 'get_all'])->middleware(['auth'])->name('prospect.all');
@@ -28,12 +44,25 @@ Route::get('project/prospect', [ProjectController::class, 'get_prospect'])->midd
 Route::resource('prospect', ProspectController::class)->middleware(['auth']);
 Route::resource('project', ProjectController::class)->middleware(['auth']);
 Route::resource('agent', AgentController::class)->middleware(['auth']);
-Route::resource('sales', SalesController::class)->middleware(['auth']);
+Route::post('agent/active', [AgentController::class, 'active'])->middleware(['auth'])->name('agent.active');
+Route::post('agent/nonactive', [AgentController::class, 'nonactive'])->middleware(['auth'])->name('agent.nonactive');
+Route::get('sales/{agent_id}', [SalesController::class, 'index'])->middleware(['auth'])->name('sales.index');
+
 
 Route::get('/getsales', [AgentController::class, 'getSales'])->name('agent.getsales');
 Route::get('/get_agent', [AgentController::class, 'get_agent'])->name('agent.getagent');
+Route::get('/getkota', [DemografiController::class, 'getkota']);
+Route::get('/getstandard', [StatusController::class, 'getstandard']);
+Route::get('/cek_hp', [ProspectController::class, 'cek_hp']);
+Route::get('/get_campaign', [CampaignController::class, 'get_campaign']);
 
 
+Route::get('/reset', function () {
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+});
 
 // Route::get('/dashboard', function () {
 //     return view('pages.index');

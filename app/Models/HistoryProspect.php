@@ -11,7 +11,19 @@ class HistoryProspect extends Model
 {
     use HasFactory;
     protected $table = 'history_prospect';
-    protected $fillable = ['prospect_id','pt_id','project_id','agent_id','sales_id','blast_agent_id','blast_sales_id','move_id','number_move','move_date','assign_date'];
+    protected $fillable = [
+        'prospect_id',
+        'pt_id',
+        'project_id',
+        'agent_id',
+        'sales_id',
+        'blast_agent_id',
+        'blast_sales_id',
+        'move_id',
+        'number_move',
+        'move_date',
+        'assign_date'
+    ];
     // public $timestamps = false;
 
     public static function total_leads(){
@@ -34,12 +46,16 @@ class HistoryProspect extends Model
                 ->leftJoin('sumber_data','sumber_data.id','prospect.sumber_data_id')
                 ->leftJoin('sumber_platform','sumber_platform.id','prospect.sumber_platform_id')
                 ->leftJoin('campaign','campaign.id','prospect.campaign_id')
+                ->leftJoin('gender','gender.id','prospect.gender_id')
+                ->leftJoin('usia','usia.id','prospect.usia_id')
+                ->leftJoin('pekerjaan','pekerjaan.id','prospect.pekerjaan_id')
+                ->leftJoin('penghasilan','penghasilan.id','prospect.penghasilan_id')
                 // ->leftJoin('leads_not_interested','leads_not_interested.prospect_id','prospect.id')
                 // ->leftJoin('not_interested','not_interested.id','leads_not_interested.not_interested_id')
                 ->select('prospect.*'
-                ,'sumber_data.nama_sumber','sumber_platform.nama_platform','campaign.nama_campaign','project.nama_project','agent.kode_agent','sales.nama_sales','status.status',DB::raw('(select alasan from not_interested where id = 
+                ,'sumber_data.nama_sumber','sumber_platform.nama_platform','campaign.nama_campaign','project.nama_project','project.id as project_id','agent.id as agent_id','agent.kode_agent','agent.nama_agent','sales.id as sales_id','sales.nama_sales','status.status',DB::raw('(select alasan from not_interested where id = 
                 (select not_interested_id from leads_not_interested lni where lni.prospect_id = prospect.id)
-               ) as alasan')
+               ) as alasan'), 'gender.jenis_kelamin','usia.range_usia','pekerjaan.tipe_pekerjaan','penghasilan.range_penghasilan'
                 )
                 ->where('users.id',Auth::user()->id);
                 // ->orderBy('prospect.id','desc');

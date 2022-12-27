@@ -29,6 +29,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
+        // dd('tes');
         // $prospect_cpy = Prospect::all();
         // for ($i=0; $i < count($prospect_cpy) ; $i++) { 
         //     $p = Prospectt::find($prospect_cpy[$i]->id);

@@ -9,6 +9,6 @@ class ProjectAgent extends Model
 {
     use HasFactory;
     protected $table = 'project_agent';
-    protected $fillable = ['project_id','agent_id'];
+    protected $fillable = ['project_id','agent_id','urut_project_agent'];
     public $timestamps = false;
 }

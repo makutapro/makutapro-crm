@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agent;
+use App\Models\ProjectAgent;
 use App\Models\Sales;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller
@@ -15,8 +19,95 @@ class AgentController extends Controller
      */
     public function index()
     {
-        // $agent = Agent
-        return view('pages.agent.index');
+        $agent = Agent::all();
+        
+        // for ($i=0; $i < count($agent); $i++) { 
+        //     User::where('id',$agent[$i]->user_id)->update([
+        //         'hp' => $agent[$i]->hp,
+        //         'email' => $agent[$i]->email,
+        //     ]);
+        // }die;
+
+
+        $data = Agent::agent()->get();
+        // dd($data);
+
+        for ($i=0; $i < count($data); $i++) { 
+            $closingAmount = Agent::agent()   
+                                ->join('leads_closing','leads_closing.agent_id','agent.id')
+                                ->select(DB::raw('sum(leads_closing.closing_amount) as closing_amount'))
+                                ->where('leads_closing.agent_id',$data[$i]->id)
+                                ->get();
+
+            $data[$i]->closing_amount = $closingAmount[0]->closing_amount;
+        }
+        // dd($data);
+
+        return view('pages.agent.index', compact('data'));
+    }
+
+    public function active(Request $request){
+        // ambil data agent yang ingin di aktifkan
+        $agent = Agent::find($request->agent_id);
+        
+        $UrutAgentMax = Agent::where(['project_id' => $agent->project_id])->max('urut_agent');
+
+        $agent->urut_agent = $UrutAgentMax+1;
+        $agent->save();
+
+        ProjectAgent::where(['agent_id' => $agent->id])->update([
+            'urut_project_agent' => $UrutAgentMax+1
+        ]);
+
+        User::where(['id' => $agent->user_id])->update([
+            'active' => 1,
+        ]);
+
+        return redirect()
+            ->back()
+            ->with('status', 'Agent telah di aktifkan!');
+    }
+
+    public function nonactive(Request $request){
+        // ambil data agent yang ingin di non aktifkan
+        $agent = Agent::find($request->agent_id);
+        
+        // ambil data agent yang no urutnya lebih besar dari agent yg ingin di non aktifkan
+        $data = Agent::where('project_id', $agent->project_id)
+                        ->where('urut_agent','>',$agent->urut_agent)
+                        ->get();
+
+
+        // update data agent (urut agent) yang no urut nya lebih besar dari agent yg ingin di non aktifkan
+        if (count($data) > 0) {
+            if($data[0]->urut_agent != $agent->urut_agent + 1){
+                return redirect()
+                        ->back()
+                        ->with('status', 'Ada kesalahan saat menonaktifkan agent');
+            }
+            for ($i = 0; $i < count($data); $i++) {
+                Agent::where(['id' => $data[$i]->id])->update([
+                    'urut_agent' => $data[$i]->urut_agent - 1,
+                ]);
+            }
+        }
+        
+        $agent->urut_agent = 0;
+        $agent->active = 0;
+        $agent->save();
+
+        ProjectAgent::where(['agent_id' => $agent->id])->update([
+            'urut_project_agent' => 0
+        ]);
+
+        User::where(['id' => $agent->user_id])->update([
+            'active' => 0,
+        ]);
+
+        
+        return redirect()
+            ->back()
+            ->with('status', 'Agent telah di non-aktifkan!');
     }
 
     /**
@@ -87,7 +178,7 @@ class AgentController extends Controller
 
     public function get_agent(Request $request)
     {
-        $agent = Agent::where('project_id',$request->project)->pluck(
+        $agent = Agent::where(['project_id' => $request->project,'active' => 1])->pluck(
             'nama_agent',
             'id'
         );
@@ -97,7 +188,7 @@ class AgentController extends Controller
 
     public function getsales(Request $request)
     {
-        $sales = Sales::where('sales.agent_id',$request->agent)
+        $sales = Sales::where(['sales.agent_id' => $request->agent, 'active' => 1])
                         ->pluck('nama_sales','id');
 
         return response()->json($sales);

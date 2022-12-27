@@ -13,6 +13,12 @@ class Project extends Model
     protected $table = 'project';
     protected $fillable = ['pt_id','user_id','kode_project','nama_project','description','send_by','active'];
 
+
+    public function agent()
+    {
+        return $this->hasMany(Agent::class, 'project_id');
+    }
+    
     public function pt()
     {
         return $this->belongsTo(Pt::class, 'pt_id');
@@ -21,7 +27,8 @@ class Project extends Model
     public static function get_project(){
         return DB::table('project')
                     ->join('pt','pt.id','=','project.pt_id')
-                    ->where('pt.user_id','=',Auth::user()->id);
+                    ->where('pt.user_id','=',Auth::user()->id)
+                    ->select('project.*');
 
     }
 }

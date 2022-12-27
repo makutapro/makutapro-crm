@@ -84,6 +84,19 @@ class ProjectController extends Controller
                 ->where('user_id',Auth::user()->id)
                 ->get();
 
+        // =====> Generate Kode Project <===== //
+
+        // $nama_project = explode(" ", $request->nama_project);
+        // $kode_project = "";
+
+        // foreach ($nama_project as $w) {
+        //     $kode_project .= strtoupper(mb_substr($w, 0, 1));
+        // }
+        // $kode_project = $data[0]->kode_pt.'-'.$kode_project;
+        // dd($kode_project);
+        
+        // =====> End of Generate Kode Project <===== //
+
         Project::create([
             'pt_id' => $data[0]->id,
             'nama_project' => $request->nama_project,

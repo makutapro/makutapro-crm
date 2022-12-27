@@ -15,7 +15,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $my_apikey = "ZJFOVG1W5TTL3OEPVEQK";
+            $api_url = "http://panel.rapiwha.com/send_message.php";
+            $api_url .= "?apikey=". urlencode ($my_apikey);
+            $api_url .= "&number=". urlencode ("6289508867687");
+            $api_url .= "&text=". urlencode ("hallo");
+            $my_result_object = json_decode(file_get_contents($api_url, false));
+        })->everyMinute()->runInBackground()
+        ->emailOutputTo('desirmd3012@gmail.com');
     }
 
     /**

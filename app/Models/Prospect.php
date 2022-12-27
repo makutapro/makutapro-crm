@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Prospect extends Model
 {
     use HasFactory;
-    protected $table = 'prospect_cpy';
+    protected $table = 'prospect';
     protected $fillable = [
         'nama_prospect',
         'kode_negara',
@@ -16,15 +16,18 @@ class Prospect extends Model
         'email',
         'message',
         'catatan',
+        'catatan_admin',
         'catatan_sales',
         'verified_status',
         'verified_at',
         'accept_status',
         'accept_at',
         'gender_id',
-        'status',
+        'status_id',
+        'status_date',
         'usia_id',
-        'city_id',
+        'domisili_id',
+        'tempat_kerja_id',
         'pekerjaan_id',
         'penghasilan_id',
         'sumber_data_id',
@@ -38,5 +41,18 @@ class Prospect extends Model
         'input_by',
         'edit_by',
         'tertarik_tipe_unit_id',
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'full_path_ref'
     ];
+
+    public function historyProspect(){
+        return $this->hasOne(HistoryProspect::class, 'prospect_id');
+    }
+
+    public function blast(){
+        return $this->hasMany(HistoryBlast::class, 'prospect_id');
+    }
+
 }

@@ -2,9 +2,6 @@
 @section('title', 'Project List')
 
 @section('css')
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/animate.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/date-picker.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/dropzone.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/sweetalert2.css')}}">
 @endsection
 
@@ -59,8 +56,7 @@
               <div class="row">
                 <div class="col">
                   <div>
-                    {{-- <button class="btn btn-success me-3 sweet-8" type="button" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-8']);">Add</button> --}}
-					          <button class="btn btn-success sweet-8" type="button" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-8']);">Success</button>
+                    <button class="btn btn-success sweet-8" type="submit">Save</button>
                     <a class="btn btn-danger" href="{{route('project.index')}}">Cancel</a>
                   </div>
                 </div>
@@ -75,16 +71,6 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/datepicker/date-picker/datepicker.js')}}"></script>
-<script src="{{asset('assets/js/datepicker/date-picker/datepicker.en.js')}}"></script>
-<script src="{{asset('assets/js/datepicker/date-picker/datepicker.custom.js')}}"></script>
-<script src="{{asset('assets/js/dropzone/dropzone.js')}}"></script>
-<script src="{{asset('assets/js/dropzone/dropzone-script.js')}}"></script>
-<script src="{{asset('assets/js/typeahead/handlebars.js')}}"></script>
-<script src="{{asset('assets/js/typeahead/typeahead.bundle.js')}}"></script>
-<script src="{{asset('assets/js/typeahead/typeahead.custom.js')}}"></script>
-<script src="{{asset('assets/js/typeahead-search/handlebars.js')}}"></script>
-<script src="{{asset('assets/js/typeahead-search/typeahead-custom.js')}}"></script>
 <script src="{{asset('assets/js/sweet-alert/sweetalert.min.js')}}"></script>
 <script src="{{asset('assets/js/sweet-alert/app.js')}}"></script>
 @endsection

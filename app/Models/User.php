@@ -26,8 +26,10 @@ class User extends Authenticatable
         'email',
         'hp',
         'photo',
+        'ktp',
         'active'
     ];
+    // public $timestamps = false;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -53,8 +55,10 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pt(): HasMany
+    
+
+    public function sales()
     {
-        return $this->hasMany(Pt::class)->where('user_id',Auth::user()->id);
+        return $this->hasMany(Sales::class, 'user_id');
     }
 }
