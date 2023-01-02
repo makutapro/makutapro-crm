@@ -29,7 +29,7 @@
 <div class="container-fluid">
 	<div class="row">
 		
-		<div class="col-xl-9 xl-100 chart_data_left box-col-12">
+		<div class="col-xl-12 xl-100 chart_data_left box-col-12">
 			<div class="card">
 				<div class="card-body p-0">
 					<div class="row m-0 chart-main">
@@ -99,7 +99,7 @@
 		</div>
 	</div>
 	<div class="row second-chart-list third-news-update">
-		<div class="col-xl-8 xl-100 dashboard-sec box-col-12">
+		<div class="col-xl-12 xl-100 dashboard-sec box-col-12">
 			<div class="card earning-card">
 				<div class="card-body p-0">
 					<div class="row m-0">
@@ -190,7 +190,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xl-4 xl-50 box-col-6">
+		<div class="col-xl-6 xl-50 box-col-6">
 			<div class="card">
 				<div class="card-header">
 				   <div class="row">
@@ -206,7 +206,7 @@
 				</div>
 			 </div>
 		</div>
-		<div class="col-xl-4 xl-50 box-col-6">
+		<div class="col-xl-6 xl-50 box-col-6">
 			<div class="card">
 				<div class="card-header">
 				   <div class="row">
@@ -224,7 +224,7 @@
 				</div>
 			 </div>
 		</div>
-		<div class="col-xl-8 xl-100 notification box-col-12">
+		<div class="col-xl-12 xl-100 notification box-col-12">
 			<div class="card">
 				<div class="card-header card-no-border">
 					<div class="header-top">

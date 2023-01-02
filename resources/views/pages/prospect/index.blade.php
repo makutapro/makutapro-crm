@@ -511,72 +511,72 @@
 		// $("#modalTitle").text(id);
 		// $(this).find(".modal-body").html("<h5>id: " + id + "</h5> + <p>+exitMessage</p>");
 		$(this).find(".modal-body").html(`
-		<div class="row">
-			<div class="col-sm-14 col-xl-12">
-				<div class="ribbon-wrapper card">
-					<div class="card-body">
-						<div class="ribbon ribbon-clip ribbon-primary">History Change Status</div>
-						<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo mb-0" id="hcs">
-							<iframe src="https://embed.lottiefiles.com/animation/97930" id="loader"></iframe>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-14 col-xl-12">
-				<div class="ribbon-wrapper card">
-					<div class="card-body">
-						<div class="ribbon ribbon-clip ribbon-secondary">History Move</div>
-						<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo ">
-							<div class="media">
-								<div class="activity-line"></div>
-								<div class="activity-dot-secondary"></div>
-								<div class="media-body">
-									<span>Update Product</span>
-									<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
-								</div>
-							</div>
-							<div class="media">
-								<div class="activity-line"></div>
-								<div class="activity-dot-secondary"></div>
-								<div class="media-body">
-									<span>Update Product</span>
-									<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
-								</div>
+			<div class="row">
+				<div class="col-sm-14 col-xl-12">
+					<div class="ribbon-wrapper card">
+						<div class="card-body">
+							<div class="ribbon ribbon-clip ribbon-primary">History Change Status</div>
+							<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo mb-0" id="hcs">
+								<iframe src="https://embed.lottiefiles.com/animation/97930" id="loader"></iframe>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-14 col-xl-12">
-				<div class="ribbon-wrapper card">
-					<div class="card-body">
-						<div class="ribbon ribbon-clip ribbon-success">History Follow Up</div>
-						<div class="activity-timeline  new-update pt-0 vertical-scroll scroll-demo ">
-							<div class="media">
-								<div class="activity-line"></div>
-								<div class="activity-dot-secondary"></div>
-								<div class="media-body">
-									<span>Update Product</span>
-									<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+			<div class="row">
+				<div class="col-sm-14 col-xl-12">
+					<div class="ribbon-wrapper card">
+						<div class="card-body">
+							<div class="ribbon ribbon-clip ribbon-secondary">History Move</div>
+							<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo ">
+								<div class="media">
+									<div class="activity-line"></div>
+									<div class="activity-dot-secondary"></div>
+									<div class="media-body">
+										<span>Update Product</span>
+										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+									</div>
 								</div>
-							</div>
-							<div class="media">
-								<div class="activity-line"></div>
-								<div class="activity-dot-secondary"></div>
-								<div class="media-body">
-									<span>Update Product</span>
-									<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+								<div class="media">
+									<div class="activity-line"></div>
+									<div class="activity-dot-secondary"></div>
+									<div class="media-body">
+										<span>Update Product</span>
+										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			<div class="row">
+				<div class="col-sm-14 col-xl-12">
+					<div class="ribbon-wrapper card">
+						<div class="card-body">
+							<div class="ribbon ribbon-clip ribbon-success">History Follow Up</div>
+							<div class="activity-timeline  new-update pt-0 vertical-scroll scroll-demo ">
+								<div class="media">
+									<div class="activity-line"></div>
+									<div class="activity-dot-secondary"></div>
+									<div class="media-body">
+										<span>Update Product</span>
+										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+									</div>
+								</div>
+								<div class="media">
+									<div class="activity-line"></div>
+									<div class="activity-dot-secondary"></div>
+									<div class="media-body">
+										<span>Update Product</span>
+										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		`);
 	
 	});
