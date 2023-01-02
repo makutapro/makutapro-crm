@@ -19,7 +19,8 @@ class HistoryController extends Controller
                         'standard.alasan',
                         'history_change_status.created_at',
                         'history_change_status.chat_file',
-                        'history_change_status.standard_id'
+                        'history_change_status.standard_id',
+                        'history_change_status.role_id'
                     )
                     ->get();
 

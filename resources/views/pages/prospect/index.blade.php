@@ -322,7 +322,7 @@
 			},
 			"aoColumnDefs": [
 				{ "bSortable": false, "aTargets": [ 2, 3, 4, 5, 6, 7,8 ] },
-				{ "width" : "100%", "targets": 9}
+				// { "width" : "100%", "targets": 9}
 			],
 			"columns": [
 				// {
@@ -464,120 +464,122 @@
 			"deferRender": true,
 		});
 
-		$("#myModal").on('show.bs.modal', function (e) {
-			let triggerLink = $(e.relatedTarget);
-			let id = triggerLink[0].dataset['id'];
-
-			$.ajax({
-				type:"GET",
-				url:"/history?prospect_id="+id,
-				dataType: 'JSON',
-				success:function(res){
-					$("#loader").css("display","none");
-					if(res.length > 0){
-						for (let i = 0; i < res.length; i++) {
-
-							var date = new Date(res[i].created_at);
-							var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-							var name = res[i].name;
-							if(res[i].standard_id == 24){
-								name = 'System';
-							}
-
-							$("#hcs").append(
-								`<div class="media" id="hcs"> 
-									<div class="activity-dot-secondary"></div>
-									<div class="media-body">
-										<span> ${name} Merubah Status menjadi <span class="badge badge-light-${res[i].id}">${res[i].status}</span></span>
-										<span class="pull-right f-12 font-dark me-2">`+ date.getHours()+':'+date.getMinutes() +' | '+ date.getDate() + ', ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`.</span>
-										<p class="font-roboto">${res[i].alasan}.</p>
-									</div>
-								</div>`
-							);
-						}
-					}else{
-						$("#hcs").append(
-								`<p>No Recent Updated ..</p>`
-							);
-					}
-				}
-			});
-
-			// let exitMessage = triggerLink.data("exitMessage");
-	
-			// $("#modalTitle").text(id);
-			// $(this).find(".modal-body").html("<h5>id: " + id + "</h5> + <p>+exitMessage</p>");
-			$(this).find(".modal-body").html(`
-			<div class="row">
-				<div class="col-sm-14 col-xl-12">
-					<div class="ribbon-wrapper card">
-						<div class="card-body">
-							<div class="ribbon ribbon-clip ribbon-primary">History Change Status</div>
-							<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo mb-0" id="hcs">
-								<iframe src="https://embed.lottiefiles.com/animation/97930" id="loader"></iframe>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-14 col-xl-12">
-					<div class="ribbon-wrapper card">
-						<div class="card-body">
-							<div class="ribbon ribbon-clip ribbon-secondary">History Move</div>
-							<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo ">
-								<div class="media">
-									<div class="activity-line"></div>
-									<div class="activity-dot-secondary"></div>
-									<div class="media-body">
-										<span>Update Product</span>
-										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
-									</div>
-								</div>
-								<div class="media">
-									<div class="activity-line"></div>
-									<div class="activity-dot-secondary"></div>
-									<div class="media-body">
-										<span>Update Product</span>
-										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-14 col-xl-12">
-					<div class="ribbon-wrapper card">
-						<div class="card-body">
-							<div class="ribbon ribbon-clip ribbon-success">History Follow Up</div>
-							<div class="activity-timeline  new-update pt-0 vertical-scroll scroll-demo ">
-								<div class="media">
-									<div class="activity-line"></div>
-									<div class="activity-dot-secondary"></div>
-									<div class="media-body">
-										<span>Update Product</span>
-										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
-									</div>
-								</div>
-								<div class="media">
-									<div class="activity-line"></div>
-									<div class="activity-dot-secondary"></div>
-									<div class="media-body">
-										<span>Update Product</span>
-										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			`);
-		
-		});
 	}
+
+	$("#myModal").on('show.bs.modal', function (e) {
+		let triggerLink = $(e.relatedTarget);
+		let id = triggerLink[0].dataset['id'];
+
+		$.ajax({
+			type:"GET",
+			url:"/history?prospect_id="+id,
+			dataType: 'JSON',
+			success:function(res){
+				$("#loader").css("display","none");
+				if(res.length > 0){
+					for (let i = 0; i < res.length; i++) {
+
+						var date = new Date(res[i].created_at);
+						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+						var name = res[i].name;
+						if(res[i].standard_id == 24)
+							name = 'System';
+						if(res[i].role_id == 1)
+							name = 'Admin Internal'
+
+						$("#hcs").append(
+							`<div class="media" id="hcs"> 
+								<div class="activity-dot-secondary"></div>
+								<div class="media-body">
+									<span> ${name} Merubah Status menjadi <span class="badge badge-light-${res[i].id}">${res[i].status}</span></span>
+									<span class="pull-right f-12 font-dark me-2">`+ date.getHours()+':'+date.getMinutes() +' | '+ date.getDate() + ', ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`.</span>
+									<p class="font-roboto">${res[i].alasan}.</p>
+								</div>
+							</div>`
+						);
+					}
+				}else{
+					$("#hcs").append(
+							`<p>No Recent Updated ..</p>`
+						);
+				}
+			}
+		});
+
+		// let exitMessage = triggerLink.data("exitMessage");
+
+		// $("#modalTitle").text(id);
+		// $(this).find(".modal-body").html("<h5>id: " + id + "</h5> + <p>+exitMessage</p>");
+		$(this).find(".modal-body").html(`
+		<div class="row">
+			<div class="col-sm-14 col-xl-12">
+				<div class="ribbon-wrapper card">
+					<div class="card-body">
+						<div class="ribbon ribbon-clip ribbon-primary">History Change Status</div>
+						<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo mb-0" id="hcs">
+							<iframe src="https://embed.lottiefiles.com/animation/97930" id="loader"></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-14 col-xl-12">
+				<div class="ribbon-wrapper card">
+					<div class="card-body">
+						<div class="ribbon ribbon-clip ribbon-secondary">History Move</div>
+						<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo ">
+							<div class="media">
+								<div class="activity-line"></div>
+								<div class="activity-dot-secondary"></div>
+								<div class="media-body">
+									<span>Update Product</span>
+									<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+								</div>
+							</div>
+							<div class="media">
+								<div class="activity-line"></div>
+								<div class="activity-dot-secondary"></div>
+								<div class="media-body">
+									<span>Update Product</span>
+									<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-14 col-xl-12">
+				<div class="ribbon-wrapper card">
+					<div class="card-body">
+						<div class="ribbon ribbon-clip ribbon-success">History Follow Up</div>
+						<div class="activity-timeline  new-update pt-0 vertical-scroll scroll-demo ">
+							<div class="media">
+								<div class="activity-line"></div>
+								<div class="activity-dot-secondary"></div>
+								<div class="media-body">
+									<span>Update Product</span>
+									<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+								</div>
+							</div>
+							<div class="media">
+								<div class="activity-line"></div>
+								<div class="activity-dot-secondary"></div>
+								<div class="media-body">
+									<span>Update Product</span>
+									<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		`);
+	
+	});
 
 	refreshDatatable();
 	// showLoading();
