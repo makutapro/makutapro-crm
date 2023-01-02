@@ -9,6 +9,7 @@ use App\Http\Controllers\SalesController;
 use App\Http\Controllers\DemografiController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\HistoryController;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -55,6 +56,7 @@ Route::get('/getkota', [DemografiController::class, 'getkota']);
 Route::get('/getstandard', [StatusController::class, 'getstandard']);
 Route::get('/cek_hp', [ProspectController::class, 'cek_hp']);
 Route::get('/get_campaign', [CampaignController::class, 'get_campaign']);
+Route::get('/history', [HistoryController::class, 'history']);
 
 
 Route::get('/reset', function () {

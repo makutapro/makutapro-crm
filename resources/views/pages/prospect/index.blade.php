@@ -4,6 +4,7 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/scrollable.css')}}">
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/date-picker.css')}}">
 <style>
@@ -206,7 +207,7 @@
 						</div>
 					</div> --}}
 					<div class="table-responsive">
-						<table class="display datatables" id="prospect-datatable">
+						<table class="display datatables" id="prospect-datatable" style="font-size: 12px;width:100%">
 							<thead>
 								<tr>
 									{{-- <th id="thCheckMove" style="display:none">
@@ -252,6 +253,17 @@
 		</div>
 	</div>
 </div>
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" style="max-width: 1000px;">
+		<div class="modal-content" >
+			<div class="modal-body px-4" style="background-color:#f6f6f6; border-radius: 8px;">
+				<p class="modalContent">
+
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 
 @section('script')
@@ -275,16 +287,16 @@
 </script>
 
 <script>
-	function showLoading(){
-		// let loader = document.querySelector(".loader-wrapper")
-		// loader.style.display = "block"
-		document.getElementById('loader-wrapper').style.display = 'block';
-	}
-	function hideLoading(){
-		// let loader = document.querySelector(".loader-wrapper")
-		// loader.style.display = "none"
-		document.getElementById('loader-wrapper').style.display = 'none';
-	}
+	// function showLoading(){
+	// 	// let loader = document.querySelector(".loader-wrapper")
+	// 	// loader.style.display = "block"
+	// 	document.getElementById('loader-wrapper').style.display = 'block';
+	// }
+	// function hideLoading(){
+	// 	// let loader = document.querySelector(".loader-wrapper")
+	// 	// loader.style.display = "none"
+	// 	document.getElementById('loader-wrapper').style.display = 'none';
+	// }
 	function refreshDatatable(){
 		$('#prospect-datatable').DataTable({
         	"scrollX": true,
@@ -308,6 +320,10 @@
 				// 	hideLoading()
 				// }
 			},
+			"aoColumnDefs": [
+				{ "bSortable": false, "aTargets": [ 2, 3, 4, 5, 6, 7,8 ] },
+				{ "width" : "100%", "targets": 9}
+			],
 			"columns": [
 				// {
 				// 	mRender: function(data, type, row){
@@ -317,7 +333,7 @@
 				{ mRender: function(data, type, row, meta) {
 						return meta.row + 1
 					}},
-				{ data: 'id' },
+				{ data: 'id'},
 				{
 					mRender: function(data, type, row) {
 						return `
@@ -357,23 +373,8 @@
 				},
 				{
 					mRender: function(data, type, row) {
-						if(row.status_id == 1)
-							var st= `new`
-						if(row.status_id == 2)
-							var st= `cold`
-						if(row.status_id == 3)
-							var st= `warm`
-						if(row.status_id == 4)
-							var st= `hot`
-						if(row.status_id == 5)
-							var st= `closing`
-						if(row.status_id == 6)
-							var st= `not-interest`
-						if(row.status_id == 7)
-							var st= `expired`
-						
 						return `
-						<span class="span badge rounded-pill pill-badge-${st} text-light">${row.status}</span><br><small class="card-subtitle" style='font-size: 9px;color: grey;'>${row.alasan != null ? row.alasan : ''}</small>
+						<span class="span badge rounded-pill pill-badge-${row.status_id} text-light">${row.status}</span>
 						`
 					}
 				},
@@ -383,7 +384,7 @@
 						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 						var ver_date = new Date(row.verified_at)
 
-						return `<small class="card-subtitle" style='font-size: 11px;color: #020202;'>`+ date.getHours()+':'+date.getMinutes() +' '+ date.getDate() + ' ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`</small><br><small class="card-subtitle" style="font-size: 9px;color:#484848">${row.verified_at == "0000-00-00 00:00:00" || row.verified_at == null ? "" : "Verified at "+ ver_date.getHours()+':'+ver_date.getMinutes() +' '+ ver_date.getDate() + ' ' + monthNames[ver_date.getMonth()] + ' '+ ver_date.getFullYear().toString().substring(2)}`+`</small>`;
+						return `<small class="card-subtitle" style='font-size: 11px;color: #020202;'>`+ date.getHours()+':'+date.getMinutes() +' '+ date.getDate() + ',' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`</small><br><small class="card-subtitle" style="font-size: 9px;color:#484848">${row.verified_at == "0000-00-00 00:00:00" || row.verified_at == null ? "" : "Verified at "+ ver_date.getHours()+':'+ver_date.getMinutes() +' '+ ver_date.getDate() + ',' + monthNames[ver_date.getMonth()] + ' '+ ver_date.getFullYear().toString().substring(2)}`+`</small>`;
 				    }
 				},
 				{
@@ -393,20 +394,20 @@
 						var process_date = '';
 
 						if(row.accept_at != null && row.accept_at != '0000-00-00 00:00:00')
-							 process_date = `<small class="card-subtitle" style='font-size: 11px;color: #020202;'>`+ date.getHours()+':'+date.getMinutes() +' '+ date.getDate() + ' ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`</small>`;
+							 process_date = `<small class="card-subtitle" style='font-size: 11px;color: #020202;'>`+ date.getHours()+':'+date.getMinutes() +' '+ date.getDate() + ',' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`</small>`;
 
 						return process_date;
 				    }
 				},
 				{
 					mRender: function(data,type,row){
-						var btn_detail = `<a href="prospect/${row.id}"><img src="{{asset('assets/images/button/info.png')}}" class="me-2" alt="info"></a>`
+						var btn_detail = `<a href="prospect/${row.id}"><img src="{{asset('assets/images/button/info.png')}}" class="me-2 mt-1" alt="info"></a>`
 						var btn_delete = `<form action="" method="post" onsubmit="return confirm('Apakah anda yakin ?')">
 										@method('delete')
 										@csrf
-										<button class="btn" style="background: url('assets/images/button/trash.png') no-repeat; width:100%;height:100%;" type="submit"></button>
+										<button type="submit" class="btn p-0"><a><img src="{{asset('assets/images/button/trash.png')}}" alt="Delete Prospect"></a></button>
 									</form>`
-						var btn_history = `<a href=""><img class="me-2" src="{{asset('assets/images/button/history.png')}}" alt="History"></a>`
+						var btn_history = `<a data-bs-toggle="modal" data-bs-target="#myModal" data-id="${row.id}"><img class="me-2 mt-1" src="{{asset('assets/images/button/history.png')}}" alt="History"></a>`
 						var btn_verified = `<a title="Verified ?"><img src="{{asset('assets/images/button/verified.png')}}" class="me-2" alt="Verified ?"></a>`
 						var btn_note = `<a title="Note" data-bs-toggle="modal" data-bs-target="#detail${row.id}"><img src="{{asset('assets/images/button/notes.png')}}" class="me-2" alt="Note"></a>
 								<div class="modal fade" id="detail${row.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -462,16 +463,130 @@
 						},
 			"deferRender": true,
 		});
+
+		$("#myModal").on('show.bs.modal', function (e) {
+			let triggerLink = $(e.relatedTarget);
+			let id = triggerLink[0].dataset['id'];
+
+			$.ajax({
+				type:"GET",
+				url:"/history?prospect_id="+id,
+				dataType: 'JSON',
+				success:function(res){
+					$("#loader").css("display","none");
+					if(res.length > 0){
+						for (let i = 0; i < res.length; i++) {
+
+							var date = new Date(res[i].created_at);
+							var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+							var name = res[i].name;
+							if(res[i].standard_id == 24){
+								name = 'System';
+							}
+
+							$("#hcs").append(
+								`<div class="media" id="hcs"> 
+									<div class="activity-dot-secondary"></div>
+									<div class="media-body">
+										<span> ${name} Merubah Status menjadi <span class="badge badge-light-${res[i].id}">${res[i].status}</span></span>
+										<span class="pull-right f-12 font-dark me-2">`+ date.getHours()+':'+date.getMinutes() +' | '+ date.getDate() + ', ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`.</span>
+										<p class="font-roboto">${res[i].alasan}.</p>
+									</div>
+								</div>`
+							);
+						}
+					}else{
+						$("#hcs").append(
+								`<p>No Recent Updated ..</p>`
+							);
+					}
+				}
+			});
+
+			// let exitMessage = triggerLink.data("exitMessage");
+	
+			// $("#modalTitle").text(id);
+			// $(this).find(".modal-body").html("<h5>id: " + id + "</h5> + <p>+exitMessage</p>");
+			$(this).find(".modal-body").html(`
+			<div class="row">
+				<div class="col-sm-14 col-xl-12">
+					<div class="ribbon-wrapper card">
+						<div class="card-body">
+							<div class="ribbon ribbon-clip ribbon-primary">History Change Status</div>
+							<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo mb-0" id="hcs">
+								<iframe src="https://embed.lottiefiles.com/animation/97930" id="loader"></iframe>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-14 col-xl-12">
+					<div class="ribbon-wrapper card">
+						<div class="card-body">
+							<div class="ribbon ribbon-clip ribbon-secondary">History Move</div>
+							<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo ">
+								<div class="media">
+									<div class="activity-line"></div>
+									<div class="activity-dot-secondary"></div>
+									<div class="media-body">
+										<span>Update Product</span>
+										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+									</div>
+								</div>
+								<div class="media">
+									<div class="activity-line"></div>
+									<div class="activity-dot-secondary"></div>
+									<div class="media-body">
+										<span>Update Product</span>
+										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-14 col-xl-12">
+					<div class="ribbon-wrapper card">
+						<div class="card-body">
+							<div class="ribbon ribbon-clip ribbon-success">History Follow Up</div>
+							<div class="activity-timeline  new-update pt-0 vertical-scroll scroll-demo ">
+								<div class="media">
+									<div class="activity-line"></div>
+									<div class="activity-dot-secondary"></div>
+									<div class="media-body">
+										<span>Update Product</span>
+										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+									</div>
+								</div>
+								<div class="media">
+									<div class="activity-line"></div>
+									<div class="activity-dot-secondary"></div>
+									<div class="media-body">
+										<span>Update Product</span>
+										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			`);
+		
+		});
 	}
 
 	refreshDatatable();
 	// showLoading();
 
-	$('.loader-wrapper').bind('ajaxStart', function(){
-		$(this).show();
-	}).bind('ajaxStop', function(){
-		$(this).hide();
-	});
+	// $('.loader-wrapper').bind('ajaxStart', function(){
+	// 	$(this).show();
+	// }).bind('ajaxStop', function(){
+	// 	$(this).hide();
+	// });
 
 	$("#checkAllProspect").change(function(){
 		$('input:checkbox').not(this).prop('checked', this.checked);
@@ -481,6 +596,9 @@
 		document.getElementById('AllRow').style.display = 'none';
 		document.getElementById('MoveRow').style.display = 'blok';
 	}
+
+
+    
 	
 	
 </script>

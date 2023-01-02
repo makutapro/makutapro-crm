@@ -53,9 +53,7 @@ class HistoryProspect extends Model
                 // ->leftJoin('leads_not_interested','leads_not_interested.prospect_id','prospect.id')
                 // ->leftJoin('not_interested','not_interested.id','leads_not_interested.not_interested_id')
                 ->select('prospect.*'
-                ,'sumber_data.nama_sumber','sumber_platform.nama_platform','campaign.nama_campaign','project.nama_project','project.id as project_id','agent.id as agent_id','agent.kode_agent','agent.nama_agent','sales.id as sales_id','sales.nama_sales','status.status',DB::raw('(select alasan from not_interested where id = 
-                (select not_interested_id from leads_not_interested lni where lni.prospect_id = prospect.id)
-               ) as alasan'), 'gender.jenis_kelamin','usia.range_usia','pekerjaan.tipe_pekerjaan','penghasilan.range_penghasilan'
+                ,'sumber_data.nama_sumber','sumber_platform.nama_platform','campaign.nama_campaign','project.nama_project','project.id as project_id','agent.id as agent_id','agent.kode_agent','agent.nama_agent','sales.id as sales_id','sales.nama_sales','status.status', 'gender.jenis_kelamin','usia.range_usia','pekerjaan.tipe_pekerjaan','penghasilan.range_penghasilan'
                 )
                 ->where('users.id',Auth::user()->id);
                 // ->orderBy('prospect.id','desc');

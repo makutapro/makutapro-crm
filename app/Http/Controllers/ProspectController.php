@@ -75,6 +75,7 @@ class ProspectController extends Controller
         
         $field = [
             'prospect.id',
+            'prospect.id',
             'prospect.nama_prospect',
             'sumber_data.nama_sumber',
             'sumber_platform.nama_platform',
@@ -405,4 +406,6 @@ class ProspectController extends Controller
     {
         //
     }
+
+   
 }

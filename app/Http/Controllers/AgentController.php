@@ -6,6 +6,8 @@ use App\Models\Agent;
 use App\Models\ProjectAgent;
 use App\Models\Sales;
 use App\Models\User;
+use App\Models\Fu;
+use App\Models\HistoryChangeStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -19,7 +21,17 @@ class AgentController extends Controller
      */
     public function index()
     {
-        $agent = Agent::all();
+
+        // $fu = Fu::all();
+        // for ($i=0; $i < count($fu); $i++) { 
+        //     $agent = Agent::where('kode_agent',$fu[$i]->KodeAgent)->get()[0];
+        //     $sales = Sales::where('kode_sales',$fu[$i]->KodeSales)->get()[0];
+        //     $data = Fu::find($fu[$i]->id);
+        //     $data->agent_id = $agent->id;
+        //     $data->sales_id = $sales->id;
+        //     $data->save();
+        // }die;
+        // $agent = Agent::all();
         
         // for ($i=0; $i < count($agent); $i++) { 
         //     User::where('id',$agent[$i]->user_id)->update([

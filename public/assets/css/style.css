@@ -3885,7 +3885,7 @@ strong~p {
 }
 
 
-.pill-badge-new {
+.pill-badge-1 {
     background-color: #01BCF1;
     -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(1, 188, 241, 0.25);
     box-shadow: -0.5px 4.33px 16px 0px rgba(1, 188, 241, 0.25);
@@ -3893,7 +3893,7 @@ strong~p {
     border-radius: 0;
 }
 
-.pill-badge-cold {
+.pill-badge-2 {
     background-color: #277A95;
     -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(39, 122, 149, 0.25);
     box-shadow: -0.5px 4.33px 16px 0px rgba(39, 122, 149, 0.25);
@@ -3901,7 +3901,7 @@ strong~p {
     border-radius: 0;
 }
 
-.pill-badge-warm {
+.pill-badge-3 {
     background-color: #FDB427;
     -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(253, 180, 39, 0.25);
     box-shadow: -0.5px 4.33px 16px 0px rgba(253, 180, 39, 0.25);
@@ -3909,34 +3909,35 @@ strong~p {
     border-radius: 0;
 }
 
-.pill-badge-hot {
+.pill-badge-4 {
     background-color: #6E398B;
-    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(110, ​57, 139, 0.25);
-    box-shadow: -0.5px 4.33px 16px 0px rgba(110, ​57, 139, 0.25);
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(110, 57, 139, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(110, 57, 139, 0.25);
     color: #fff;
     border-radius: 0;
 }
 
-.pill-badge-not-interest {
-    background-color: #C51212;
-    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(197, ​18, ​18, 0.25);
-    box-shadow: -0.5px 4.33px 16px 0px rgba(197, ​18, ​18, 0.25);
-    color: #fff;
-    border-radius: 0;
-}
-
-.pill-badge-closing {
+.pill-badge-5 {
     background-color: #77B341;
-    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(119, 179, ​65, 0.25);
-    box-shadow: -0.5px 4.33px 16px 0px rgba(119, 179, ​65, 0.25);
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(119, 179, 65, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(119, 179, 65, 0.25);
     color: #fff;
     border-radius: 0;
 }
 
-.pill-badge-expired {
+.pill-badge-6 {
+    background-color: #C51212;
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(197, 18, 18, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(197, 18, 18, 0.25);
+    color: #fff;
+    border-radius: 0;
+}
+
+
+.pill-badge-7 {
     background-color: #F38120;
-    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(243, 129, ​32, 0.25);
-    box-shadow: -0.5px 4.33px 16px 0px rgba(243, 129, ​32, 0.25);
+    -webkit-box-shadow: -0.5px 4.33px 16px 0px rgba(243, 129, 32, 0.25);
+    box-shadow: -0.5px 4.33px 16px 0px rgba(243, 129, 32, 0.25);
     color: #fff;
     border-radius: 0;
 }
@@ -16033,13 +16034,13 @@ p.data-attributes svg {
 }
 
 .activity-timeline .media .activity-line {
-    top: 132px;
-    height: 57%;
+    top: 12px;
+    height: 100%;
     position: absolute;
     width: 4px;
     background-color: #f8f8f8;
     margin: 0 auto;
-    left: 46px;
+    left: 6px;
     z-index: 1;
 }
 
@@ -16790,6 +16791,48 @@ p.data-attributes svg {
 
 .form-control-plaintext {
     width: auto !important;
+}
+
+/* New */
+.badge-light-1 { 
+    background-color: rgba(1, 188, 241, 0.25);
+    color: #01BCF1;
+}
+
+/* Cold */
+.badge-light-2 { 
+    background-color: rgba(39, 122, 149, 0.25);
+    color: #277A95;
+}
+
+/* Warm */
+.badge-light-3 { 
+    background-color: rgba(253, 180, 39, 0.25);
+    color: #FDB427;
+}
+
+/* Hot */
+.badge-light-4 { 
+    background-color: rgba(110, 57, 139, 0.25);
+    color: #6E398B;
+}
+
+/* Closing */
+.badge-light-5 { 
+    background-color: rgba(119, 179, 65, 0.25);
+    color: #77B341;
+}
+
+/* Not Interest */
+.badge-light-6 { 
+    background-color: rgba(197, 18, 18, 0.25);
+    color: #C51212;
+}
+
+/* Expired */
+.badge-light-7 { 
+    background-color: rgba(243, 129, 32, 0.25);
+    color: #F38120;
 }
 
 .badge-light-primary {
@@ -29137,9 +29180,9 @@ body.dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body
     color: var(--theme-deafult);
 }
 
-body.dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .scroll-demo {
+/* body.dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .scroll-demo {
     border: 1px solid #374558;
-}
+} */
 
 body.dark-only .page-wrapper .page-body-wrapper .page-body .card:not(.email-body) .search-form input {
     border: 1px solid #1d1e26;
