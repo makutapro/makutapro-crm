@@ -26,6 +26,10 @@ class HistoryProspect extends Model
     ];
     // public $timestamps = false;
 
+    public function prospect(){
+        return $this->hasOne(Prospect::class, 'id');
+    }
+
     public static function total_leads(){
         return DB::table('history_prospect')
                     ->join('prospect','prospect.id','history_prospect.prospect_id')

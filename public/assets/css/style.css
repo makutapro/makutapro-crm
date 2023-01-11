@@ -10,7 +10,7 @@
  */
 
  :root {
-    --theme-deafult: #588ac7;
+    --theme-deafult: #3177B6;
     --theme-secondary: #f73164;
     --status-new: #01BCF1;
 }
@@ -910,6 +910,89 @@
 
 .img-100 {
     width: 100px !important;
+}
+
+@-webkit-keyframes rotateInSetting {
+    0% {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: rotate(-200deg);
+        transform: rotate(-200deg);
+    }
+    to {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes rotateInSetting {
+    0% {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: rotate(-200deg);
+        transform: rotate(-200deg);
+    }
+    to {
+        -webkit-transform-origin: center;
+        transform-origin: center;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+
+.setting-primary,
+.setting-secondary,
+.setting-white {
+    width: 32px;
+    height: 32px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border-radius: 50px;
+}
+
+.setting-primary i,
+.setting-secondary svg,
+.setting-white svg {
+    width: 15px;
+    stroke-width: 2.5px;
+    -webkit-animation: rotateInSetting 1.5s ease infinite;
+    animation: rotateInSetting 1.5s ease infinite;
+}
+
+.setting-primary {
+    background-color: #eee;
+}
+
+.setting-primary svg {
+    color: #24695c;
+}
+
+.setting-primary i {
+    color: #3177B6;
+}
+
+.setting-primary:hover {
+    background-color: hwb(213 35% 22% / 0.869);
+}
+
+.setting-primary:hover svg {
+    color: #fff;
+}
+
+.setting-primary:hover i {
+    color: #fff;
+    -webkit-animation: rotateInSetting 1.5s ease infinite;
+    animation: rotateInSetting 1.5s ease infinite;
 }
 
 .font-primary {
@@ -26671,8 +26754,8 @@ footer {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
     background-color: #fff;
     cursor: pointer;

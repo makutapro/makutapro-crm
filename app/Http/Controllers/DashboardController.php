@@ -56,6 +56,32 @@ class DashboardController extends Controller
         // die;
         // dd(count($prospect));
 
+        $all = Prospect::join('history_prospect as hp','hp.prospect_id','prospect.id')
+                                ->join('pt','pt.id','hp.pt_id')
+                                ->join('users','users.id','pt.user_id')
+                                ->where('pt.user_id',Auth::user()->id)
+                                // ->whereIn('prospect.role_by',[6,7])
+                                ->select(DB::raw('count(*) as total_prospect'),DB::raw('YEAR(prospect.created_at) year, MONTHNAME(prospect.created_at) month, DAY(prospect.created_at) day'))
+                                // ->whereRaw('prospect.created_at >= DATE_ADD(NOW(), INTERVAL -14 DAY)')
+                                // ->take(14)
+                                ->groupBy('year','month','day');
+
+        // dd($all->get()); 
+        $digitalSrc = $all->whereNotIn('prospect.role_by',[6,7])->get();
+        $salesSrc = $all->whereIn('prospect.role_by',[6,7])->get();
+        $totalDs = null;
+        $totalSs = null;
+                                
+        foreach ($digitalSrc as $key => $value) {
+            $totalDs[] = $value->total_prospect;
+        }
+        
+        foreach ($salesSrc as $key => $value) {
+            $totalSs[] = $value->total_prospect;
+        }
+
+        // dd($all->get(), $totalDs, $totalSs);
+
         $total = HistoryProspect::total_leads()->count();
         $process = HistoryProspect::total_leads()
                 ->whereBetween('prospect.status_id',[2, 4])

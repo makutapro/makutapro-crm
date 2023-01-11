@@ -128,11 +128,11 @@
 											<div class="row">
 												<div class="col-6">
 													<label class="control-label">Since:</label>
-													<input class="form-control form-control-sm datepicker-here " name="dateSince" id="since" type="text" data-language="en" onchange="refreshDatatable()">
+													<input class="form-control form-control-sm datepicker-here since" name="since" id="since" type="text" data-language="en" onchange="refreshDatatable()">
 												</div>
 												<div class="col-6">
 													<label class="control-label">To:</label>
-													<input class="form-control form-control-sm datepicker-here " name="dateTo" id="to" type="text" data-language="en" onchange="refreshDatatable()">
+													<input class="form-control form-control-sm datepicker-here " name="to" id="to" type="text" data-language="en" onchange="refreshDatatable()">
 												</div>
 											</div>
 										</div>
@@ -384,7 +384,7 @@
 						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 						var ver_date = new Date(row.verified_at)
 
-						return `<small class="card-subtitle" style='font-size: 11px;color: #020202;'>`+ date.getHours()+':'+date.getMinutes() +' '+ date.getDate() + ',' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`</small><br><small class="card-subtitle" style="font-size: 9px;color:#484848">${row.verified_at == "0000-00-00 00:00:00" || row.verified_at == null ? "" : "Verified at "+ ver_date.getHours()+':'+ver_date.getMinutes() +' '+ ver_date.getDate() + ',' + monthNames[ver_date.getMonth()] + ' '+ ver_date.getFullYear().toString().substring(2)}`+`</small>`;
+						return `<small class="card-subtitle" style='font-size: 11px;color: #020202;'>`+ date.getHours()+':'+date.getMinutes() +' '+ date.getDate() + ', ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`</small><br><small class="card-subtitle" style="font-size: 9px;color:#484848">${row.verified_at == "0000-00-00 00:00:00" || row.verified_at == null ? "" : "Verified at "+ ver_date.getHours()+':'+ver_date.getMinutes() +' '+ ver_date.getDate() + ',' + monthNames[ver_date.getMonth()] + ' '+ ver_date.getFullYear().toString().substring(2)}`+`</small>`;
 				    }
 				},
 				{
@@ -394,7 +394,7 @@
 						var process_date = '';
 
 						if(row.accept_at != null && row.accept_at != '0000-00-00 00:00:00')
-							 process_date = `<small class="card-subtitle" style='font-size: 11px;color: #020202;'>`+ date.getHours()+':'+date.getMinutes() +' '+ date.getDate() + ',' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`</small>`;
+							 process_date = `<small class="card-subtitle" style='font-size: 11px;color: #020202;'>`+ date.getHours()+':'+date.getMinutes() +' '+ date.getDate() + ', ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`</small>`;
 
 						return process_date;
 				    }
@@ -402,7 +402,7 @@
 				{
 					mRender: function(data,type,row){
 						var btn_detail = `<a href="prospect/${row.id}"><img src="{{asset('assets/images/button/info.png')}}" class="me-2 mt-1" alt="info"></a>`
-						var btn_delete = `<form action="" method="post" onsubmit="return confirm('Apakah anda yakin ?')">
+						var btn_delete = `<form action="{{url('prospect/${row.id}')}}" method="post" onsubmit="return confirm('Apakah anda yakin ?')">
 										@method('delete')
 										@csrf
 										<button type="submit" class="btn p-0"><a><img src="{{asset('assets/images/button/trash.png')}}" alt="Delete Prospect"></a></button>
@@ -472,13 +472,12 @@
 
 		$.ajax({
 			type:"GET",
-			url:"/history?prospect_id="+id,
+			url:"/historyCs?prospect_id="+id,
 			dataType: 'JSON',
 			success:function(res){
-				$("#loader").css("display","none");
+				$("#loaderHcs").css("display","none");
 				if(res.length > 0){
 					for (let i = 0; i < res.length; i++) {
-
 						var date = new Date(res[i].created_at);
 						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 						var name = res[i].name;
@@ -488,7 +487,7 @@
 							name = 'Admin Internal'
 
 						$("#hcs").append(
-							`<div class="media" id="hcs"> 
+							`<div class="media"> 
 								<div class="activity-dot-secondary"></div>
 								<div class="media-body">
 									<span> ${name} Merubah Status menjadi <span class="badge badge-light-${res[i].id}">${res[i].status}</span></span>
@@ -506,6 +505,64 @@
 			}
 		});
 
+		$.ajax({
+			type:"GET",
+			url:"/historyMp?prospect_id="+id,
+			dataType: 'JSON',
+			success:function(res){
+				$("#loaderHmp").css("display","none");
+				if(res.length > 0){
+					for (let i = 0; i < res.length; i++) {
+						var date = new Date(res[i].created_at);
+						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+						$("#hmp").append(
+							`<div class="media"> 
+								<div class="activity-dot-secondary"></div>
+								<div class="media-body">
+									<span>Prospect Move from sales ${res[i].nama_sales}</span>
+									<span class="pull-right f-12 font-dark me-2">`+ date.getHours()+':'+date.getMinutes() +' | '+ date.getDate() + ', ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`.</span>
+								</div>
+							</div>`
+						);
+					}
+				}else{
+					$("#hmp").append(
+							`<p>No Recent Updated ..</p>`
+						);
+				}
+			}
+		});
+
+		$.ajax({
+			type:"GET",
+			url:"/historyFu?prospect_id="+id,
+			dataType: 'JSON',
+			success:function(res){
+				$("#loaderHfu").css("display","none");
+				if(res.length > 0){
+					for (let i = 0; i < res.length; i++) {
+						var date = new Date(res[i].created_at);
+						var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+						$("#hfu").append(
+							`<div class="media"> 
+								<div class="activity-dot-secondary"></div>
+								<div class="media-body">
+									<span>${res[i].nama_sales} Follow up Konsumen Melalui ${res[i].nama_media}</span>
+									<span class="pull-right f-12 font-dark me-2">`+ date.getHours()+':'+date.getMinutes() +' | '+ date.getDate() + ', ' + monthNames[date.getMonth()] + ' '+ date.getFullYear().toString().substring(2)+`.</span>
+								</div>
+							</div>`
+						);
+					}
+				}else{
+					$("#hfu").append(
+							`<p>No Recent Updated ..</p>`
+						);
+				}
+			}
+		});
+
 		// let exitMessage = triggerLink.data("exitMessage");
 
 		// $("#modalTitle").text(id);
@@ -517,7 +574,7 @@
 						<div class="card-body">
 							<div class="ribbon ribbon-clip ribbon-primary">History Change Status</div>
 							<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo mb-0" id="hcs">
-								<iframe src="https://embed.lottiefiles.com/animation/97930" id="loader"></iframe>
+								<iframe src="https://embed.lottiefiles.com/animation/97930" id="loaderHcs"></iframe>
 							</div>
 						</div>
 					</div>
@@ -528,23 +585,8 @@
 					<div class="ribbon-wrapper card">
 						<div class="card-body">
 							<div class="ribbon ribbon-clip ribbon-secondary">History Move</div>
-							<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo ">
-								<div class="media">
-									<div class="activity-line"></div>
-									<div class="activity-dot-secondary"></div>
-									<div class="media-body">
-										<span>Update Product</span>
-										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
-									</div>
-								</div>
-								<div class="media">
-									<div class="activity-line"></div>
-									<div class="activity-dot-secondary"></div>
-									<div class="media-body">
-										<span>Update Product</span>
-										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
-									</div>
-								</div>
+							<div class="activity-timeline new-update pt-0 vertical-scroll scroll-demo" id="hmp">
+								<iframe src="https://embed.lottiefiles.com/animation/97930" id="loaderHmp"></iframe>
 							</div>
 						</div>
 					</div>
@@ -555,23 +597,8 @@
 					<div class="ribbon-wrapper card">
 						<div class="card-body">
 							<div class="ribbon ribbon-clip ribbon-success">History Follow Up</div>
-							<div class="activity-timeline  new-update pt-0 vertical-scroll scroll-demo ">
-								<div class="media">
-									<div class="activity-line"></div>
-									<div class="activity-dot-secondary"></div>
-									<div class="media-body">
-										<span>Update Product</span>
-										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
-									</div>
-								</div>
-								<div class="media">
-									<div class="activity-line"></div>
-									<div class="activity-dot-secondary"></div>
-									<div class="media-body">
-										<span>Update Product</span>
-										<p class="font-roboto">Quisque a consequat ante Sit amet magna at volutapt.</p>
-									</div>
-								</div>
+							<div class="activity-timeline  new-update pt-0 vertical-scroll scroll-demo" id="hfu">
+								<iframe src="https://embed.lottiefiles.com/animation/97930" id="loaderHfu"></iframe>
 							</div>
 						</div>
 					</div>

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Fu;
+use App\Models\Agent;
+use App\Models\Sales;
 use App\Models\HistoryChangeStatus;
+use App\Models\HistoryProspectMove;
 
 class HistoryController extends Controller
 {
-    public function history(Request $request){
-        $historyCs = HistoryChangeStatus::join('status','status.id','history_change_status.status_id')
+    public function historyCs(Request $request){
+        $history = HistoryChangeStatus::join('status','status.id','history_change_status.status_id')
                     ->join('users','users.id','history_change_status.user_id')
                     ->join('standard','standard.id','history_change_status.standard_id')
                     ->where('history_change_status.prospect_id',$request->prospect_id)
@@ -23,7 +27,30 @@ class HistoryController extends Controller
                         'history_change_status.role_id'
                     )
                     ->get();
-
-        return response()->json($historyCs);
+      
+        return response()->json($history);
     }
+
+    public function historyMp(Request $request){
+
+        $history = HistoryProspectMove::join('sales','sales.id','history_prospect_move.sales_id_prev')
+                                        ->where('history_prospect_move.prospect_id',$request->prospect_id)
+                                        ->select('sales.nama_sales','history_prospect_move.created_at')
+                                        ->get();
+      
+
+        return response()->json($history);
+    }
+
+    public function historyFu(Request $request){
+        $history = Fu::join('sales','sales.id','fu.sales_id')
+                        ->join('media_fu as mf','mf.id','fu.media_fu_id')
+                        ->where('fu.prospect_id',$request->prospect_id)
+                        ->select('sales.nama_sales','mf.nama_media','fu.created_at')
+                        ->get();
+
+        return response()->json($history);
+    }
+
+
 }

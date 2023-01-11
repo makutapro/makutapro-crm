@@ -28,7 +28,7 @@
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
-						<table class="display" id="basic-1">
+						<table class="display f-12" id="basic-1">
 							<thead>
 								<tr class="text-center">
                                     <th style="width: 10px">No.</th>
@@ -45,19 +45,21 @@
 								<tr class="text-center">
 									<td>{{$loop->iteration}}</td>
 									<td class="text-start">
-										<div class="avatar clearfix">
-											<img class="img-50 rounded-circle img-thumbnail" src="../assets/images/user/1.jpg" alt="#">
-											{{-- <div class="status-circle online"></div> --}}
-											<strong>{{$agent->nama_agent}}</strong>
-										</div>  
+										<div class="d-inline-block align-middle">
+											<img class="img-40 m-r-15 rounded-circle align-top" src="{{asset('assets/images/avtar/7.jpg')}}" alt="">
+											<div class="d-inline-block">
+												<strong>{{$agent->nama_agent}}</strong><br>
+												<a href="https://api.whatsapp.com/send?phone=62{{substr($agent->hp, 1)}}" target="_blank"><span class="card-subtitle font-roboto" style="color: #827575; font-size:11px;">{{$agent->hp}}</span></a>
+											</div>
+										  </div>
 									</td>
 									<td>{{$agent->urut_agent}}</td>
 									<td>{{$agent->nama_project}}</td>
 									<td>
 										@if ($agent->closing_amount > 0)
-										<span style="color:#51bb25">Rp. {{number_format($agent->closing_amount,0, ',' , '.')}}</span>
+										<span style="color:#51bb25" class="font-roboto">Rp. {{number_format($agent->closing_amount,0, ',' , '.')}}</span>
 										@else
-										<span style="color:#f73164">Rp. {{number_format($agent->closing_amount,0, ',' , '.')}}</span>
+										<span style="color:#f73164" class="font-roboto">Rp. {{number_format($agent->closing_amount,0, ',' , '.')}}</span>
 										@endif
 										
 									</td>

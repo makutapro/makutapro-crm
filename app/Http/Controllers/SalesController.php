@@ -54,6 +54,8 @@ class SalesController extends Controller
                         ->where('agent_id',$agent_id)
                         ->select('sales.id','sales.kode_sales','sales.nama_sales','sales.urut_agent_sales','sales.created_at','users.hp','users.email','users.photo','users.ktp')
                         ->get();
+        
+
 
         for ($i=0; $i < count($data); $i++) { 
             $closingAmount = Sales::join('leads_closing','leads_closing.sales_id','sales.id')
@@ -67,7 +69,9 @@ class SalesController extends Controller
 
             $data[$i]->closing_amount = $closingAmount[0]->closing_amount;
             $data[$i]->total_prospect = $prospect[0]->total_prospect;
+            $data[$i]->agent_id  = $agent_id;
         }
+
         return view('pages.sales.index',compact('data'));
     }
 
@@ -121,9 +125,9 @@ class SalesController extends Controller
      * @param  \App\Models\Sales  $sales
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sales $sales)
+    public function update(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

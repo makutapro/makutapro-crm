@@ -9,4 +9,10 @@ class Fu extends Model
 {
     use HasFactory;
     protected $table = 'fu';
+    protected $fillable = [
+        'prospect_id',
+        'agent_id',
+        'sales_id',
+        'media_fu_id',
+    ];
 }

@@ -48,6 +48,7 @@ Route::resource('agent', AgentController::class)->middleware(['auth']);
 Route::post('agent/active', [AgentController::class, 'active'])->middleware(['auth'])->name('agent.active');
 Route::post('agent/nonactive', [AgentController::class, 'nonactive'])->middleware(['auth'])->name('agent.nonactive');
 Route::get('sales/{agent_id}', [SalesController::class, 'index'])->middleware(['auth'])->name('sales.index');
+Route::post('sales/update', [SalesController::class, 'update'])->middleware(['auth'])->name('sales.update');
 
 
 Route::get('/getsales', [AgentController::class, 'getSales'])->name('agent.getsales');
@@ -56,7 +57,9 @@ Route::get('/getkota', [DemografiController::class, 'getkota']);
 Route::get('/getstandard', [StatusController::class, 'getstandard']);
 Route::get('/cek_hp', [ProspectController::class, 'cek_hp']);
 Route::get('/get_campaign', [CampaignController::class, 'get_campaign']);
-Route::get('/history', [HistoryController::class, 'history']);
+Route::get('/historyCs', [HistoryController::class, 'historyCs']);
+Route::get('/historyMp', [HistoryController::class, 'historyMp']);
+Route::get('/historyFu', [HistoryController::class, 'historyFu']);
 
 
 Route::get('/reset', function () {

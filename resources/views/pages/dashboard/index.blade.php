@@ -28,7 +28,6 @@
 @section('content')
 <div class="container-fluid">
 	<div class="row">
-		
 		<div class="col-xl-12 xl-100 chart_data_left box-col-12">
 			<div class="card">
 				<div class="card-body p-0">
@@ -110,18 +109,17 @@
 									<p class="font-roboto">Overview of last month</p>
 								</div>
 								<div class="col-xl-12 p-0 left_side_earning">
-									<h5>$4055.56 </h5>
+									<h5>Rp. 5.000.000</h5>
 									<p class="font-roboto">This Month Budget</p>
 								</div>
 								<div class="col-xl-12 p-0 left_side_earning">
-									<h5>$1004.11</h5>
+									<h5>Rp. 47.575</h5>
 									<p class="font-roboto">Cost per leads</p>
 								</div>
 								<div class="col-xl-12 p-0 left_side_earning">
-									<h5>90%</h5>
+									<h5>60%</h5>
 									<p class="font-roboto">Cost per Acquisition</p>
 								</div>
-								<div class="col-xl-12 p-0 left-btn"><a class="btn btn-gradient">Summary</a></div>
 							</div>
 						</div>
 						<div class="col-xl-9 p-0">
@@ -131,8 +129,8 @@
 										<div class="inner-top-left">
 											<ul class="d-flex list-unstyled">
 												<li>Daily</li>
-												<li class="active">Weekly</li>
-												<li>Monthly</li>
+												<li>Weekly</li>
+												<li class="active">Monthly</li>
 												<li>Yearly</li>
 											</ul>
 										</div>
@@ -307,11 +305,11 @@
 	// report chart leads
 	var options = {
 		series: [{
-			name: 'series1',
-			data: [15, 20, 15, 40, 18, 20, 18, 23, 18, 35, 30, 55, 0]
+			name: 'Digital Source',
+			data: [20, 20, 15, 40, 18, 20, 18, 23, 18, 35, 30, 55, 0]
 		}, {
-			name: 'series2',
-			data: [2, 22, 35, 32, 40, 25, 50, 38, 42, 28, 20, 45, 0]
+			name: 'Sales Source',
+			data: [0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0]
 		}],
 		chart: {
 			height: 240,

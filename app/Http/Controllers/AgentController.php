@@ -24,12 +24,16 @@ class AgentController extends Controller
 
         // $fu = Fu::all();
         // for ($i=0; $i < count($fu); $i++) { 
-        //     $agent = Agent::where('kode_agent',$fu[$i]->KodeAgent)->get()[0];
-        //     $sales = Sales::where('kode_sales',$fu[$i]->KodeSales)->get()[0];
+        //     $agent = Agent::where('kode_agent',$fu[$i]->KodeAgent)->get();
+        //     $sales = Sales::where('kode_sales',$fu[$i]->KodeSales)->get();
         //     $data = Fu::find($fu[$i]->id);
-        //     $data->agent_id = $agent->id;
-        //     $data->sales_id = $sales->id;
-        //     $data->save();
+        //     Fu::where('id',$fu[$i]->id)->update([
+        //         'agent_id' => $agent[0]->id,
+        //         'sales_id' => $sales[0]->id,
+        //     ]);
+        //     // $data->agent_id = $agent->id;
+        //     // $data->sales_id = $sales->id;
+        //     // $data->save();
         // }die;
         // $agent = Agent::all();
         

@@ -15,15 +15,15 @@
 
 					<li class="sidebar-list">
 						<div class="text-center mb-3 d-none d-sm-block">
-							<img src="{{ Auth::user()->photo != null ? asset('images/logo/'.Auth::user()->photo) : asset('assets/img/user.jpg') }}" class="rounded-circle img-thumbnail" alt="logo" width="150px" style="border-color: #93c3ffc5">
-							{{-- <h6 class="font-primary mt-2"></h6>
-							<span class="font-secondary">Developer</span> --}}
+							<a class="setting-primary" style="position: absolute; right:25px;" id="changeLogo"><i class="icofont icofont-gear"></i></a>
+							<input type="file" id="logo" style="display:none;" accept="image/*" onchange="loadFile(event)"/>
+							<img src="{{ Auth::user()->photo != null ? asset('images/logo/'.Auth::user()->photo) : asset('assets/img/user.jpg') }}" class="rounded-circle img-thumbnail mt-3" alt="logo" width="100px" style="border-color: #3177B6">
 						</div>
-						<div class="text-center profile-details font-primary mb-2">
+						<div class="text-center profile-details mb-2">
 							<h6 style="color: #2c323f">{{Auth::user()->name}}</h6>
-							<span>Developer</span>
+							<span class="font-roboto" style="color:#999">Developer</span>
 						 </div>
-						 <hr style="background-color: #588ac7">
+						 {{-- <hr style="background-color: #F09236"> --}}
 					</li>
 					
 					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='/' ? 'active' : '' }}" href="{{route('/')}}"><i data-feather="home"> </i><span>Dashboard</span></a></li>
@@ -33,6 +33,14 @@
 					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='project.index' ? 'active' : '' }}" href="{{route('project.index')}}"><i data-feather="layers"> </i><span>Project</span></a></li>
 
 					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='agent.index' ? 'active' : '' }}" href="{{route('agent.index')}}"><i data-feather="users"> </i><span>Agent</span></a></li>
+
+					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('agent.index')}}"><i data-feather="pie-chart"> </i><span>Demographics</span></a></li>
+
+					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('agent.index')}}"><i data-feather="dollar-sign"> </i><span>ROAS</span></a></li>
+
+					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('agent.index')}}"><i data-feather="codepen"> </i><span>Campaign Management</span></a></li>
+
+					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('agent.index')}}"><i data-feather="map"> </i><span>Unit Type</span></a></li>
 
 
 				</ul>

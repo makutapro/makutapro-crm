@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Prospect;
 use App\Models\Project;
 use App\Models\HistoryProspect;
+use App\Models\HistoryProspectMove;
 use App\Models\HistoryChangeStatus;
 use App\Models\HistorySales;
+use App\Models\HistoryInputSales;
 use App\Models\HistoryBlast;
 use App\Models\Standard;
 use App\Models\City;
@@ -404,7 +406,14 @@ class ProspectController extends Controller
      */
     public function destroy(Prospect $prospect)
     {
-        //
+        $hb = HistoryBlast::where('prospect_id', $prospect->id)->delete();
+        $hp = HistoryProspect::where('prospect_id', $prospect->id)->delete();
+        $p  = HistoryChangeStatus::where('prospect_id', $prospect->id)->delete();
+        $his = HistoryInputSales::where('prospect_id', $prospect->id)->delete();
+        $hi = HistoryProspectMove::where('prospect_id',$prospect->id)->delete();
+
+        Prospect::destroy($prospect->id);
+        return redirect()->back()->with('alert','Prospect berhasil di hapus !');
     }
 
    

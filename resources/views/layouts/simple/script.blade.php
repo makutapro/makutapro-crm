@@ -22,6 +22,20 @@
 <script src="{{asset('assets/js/script.js')}}"></script>
 <script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script>
 
+<script>
+	$('#changeLogo').click(function() {
+		$('#logo').click();
+	});
+
+	var loadFile = function(event) {
+		var output = document.getElementById('photoPreview');
+		output.src = URL.createObjectURL(event.target.files[0]);
+		output.onload = function() {
+		URL.revokeObjectURL(output.src) // free memory
+		}
+	};
+</script>
+
 
 {{-- @if(Route::current()->getName() == 'index') 
 	<script src="{{asset('assets/js/layout-change.js')}}"></script>
