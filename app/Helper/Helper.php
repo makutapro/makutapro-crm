@@ -18,11 +18,6 @@ class Helper
     }
     
     public static function blastToSales($request, $NextAgent, $NextSales){
-        // dd($request, $NextAgent, $NextSales);
-        // dd($request['nama_prospect']);
-        // dd($NextAgent[0]->nama_agent);
-        // dd();
-        // $helper = new Helper;
 
         $prospect = Prospect::create([
                         'nama_prospect' => $request['nama_prospect'],
@@ -78,13 +73,13 @@ class Helper
         $destination = '62'.substr($NextSales[0]->user->hp,1);
         $message = "Hallo ".strtoupper($NextSales[0]->nama_sales)." Anda telah menerima database baru an. ".$request['nama_prospect']." untuk project $project->nama_project. Harap segera Follow Up database tersebut. \n\nKlik link dibawah ini untuk login :\nhttps://sales-beta.makutapro.id";
 
-        // Helper::SendWA($destination, $message);
+        // WA
+        Helper::SendWA($destination, $message);
+        // FCM
+        $this->pushNotif($NextSales[0]->UsernameKP, $kodeproject, $namaprospect);
 
         return "Data berhasil di tambahkan.";
 
-        // FCM
-        // $this->pushNotif($NextSales[0]->UsernameKP, $kodeproject, $namaprospect);
-        // $this->pushNotifKotlin($NextSales[0]->UsernameKP, $kodeproject, $namaprospect);
     }
 
     public static function SendWA($destination, $message){
@@ -96,12 +91,15 @@ class Helper
         $my_result_object = json_decode(file_get_contents($api_url, false));
     }
 
-    public static function PushNotif($UsernameKP, $title, $body){
+    public static function PushNotif($title, $body){
         $url = 'https://fcm.googleapis.com/fcm/send';
-        $FcmToken = DB::table('TokenFCM')
-            ->select('TokenFCM')
-            ->where('id', DB::raw("(select max(`id`) from TokenFCM where `UsernameKP` = '$UsernameKP')"))
+        $user_id = Auth::user()->id;
+
+        $FcmToken = DB::table('token_fcm')
+            ->select('token_fcm')
+            ->where('id', DB::raw("(select max(`id`) from token_fcm where `user_id` = '$user_id')"))
             ->get();
+
         if(count($FcmToken) > 0){
             $serverKey = 'AAAA8QlsNCY:APA91bFXmxrGz5CMJxxXF_AzREaaHu4h6fW7zZv5I1T565gTSxPcEZJ1S3UgvQZkS4EmssM5IF9LkXViaBguvivjSxTxGdgNXWmbLvVJ6K2-NjNGFEIwheeEgBKjveZLrXs-Un4A255H';
 

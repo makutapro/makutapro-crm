@@ -110,9 +110,9 @@
 
 })(jQuery);
 
-$('.loader-wrapper').fadeOut('slow', function () {
-    $(this).remove();
-});
+// $('.loader-wrapper').fadeOut('slow', function () {
+//     $(this).remove();
+// });
 
 $(window).on('scroll', function () {
     if ($(this).scrollTop() > 600) {

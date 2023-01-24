@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Prospect extends Model
 {
@@ -53,6 +54,24 @@ class Prospect extends Model
 
     public function blast(){
         return $this->hasMany(HistoryBlast::class, 'prospect_id');
+    }
+
+    public static function archieve(){
+        // $data =  DB::select("select * from (
+        //     select p.*, (select max(id) from fu f where f.prospect_id = p.id) as pid from prospect p
+        // ) p 
+        // left join fu f on f.id = p.pid");
+
+        $leads = Prospect::join('history_prospect as hp','hp.prospect_id','prospect.id')
+                            ->join('sumber_platform as sp','sp.id','prospect.sumber_platform_id')
+                            ->where('hp.project_id', 22)
+                            ->select('prospect.id','prospect.nama_prospect','prospect.created_at','sp.nama_platform','prospect.catatan_admin','prospect.status_id','fu.created_at as fudate')
+                            ->leftJoin('fu','fu.id',DB::raw('(select max(`id`) as fuid from fu where fu.prospect_id = prospect.id)'))
+                            ->whereRaw('fu.created_at <= DATE_ADD(NOW(), INTERVAL -30 DAY) OR (fu.id is null AND prospect.status_id !=1)')
+                            ->orderBy('prospect.id','desc')
+                            ->get();
+
+        return $leads;
     }
 
 }

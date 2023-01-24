@@ -25,4 +25,9 @@ class Sales extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function project()
+    {
+        return $this->hasMany(Project::class, 'project_id');
+    }
+
 }

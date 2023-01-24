@@ -69,6 +69,7 @@ class AgentController extends Controller
         $UrutAgentMax = Agent::where(['project_id' => $agent->project_id])->max('urut_agent');
 
         $agent->urut_agent = $UrutAgentMax+1;
+        $agent->active = 1;
         $agent->save();
 
         ProjectAgent::where(['agent_id' => $agent->id])->update([

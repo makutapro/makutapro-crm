@@ -17,7 +17,7 @@
     @yield('style')
   </head>
   <body @if(Route::current()->getName() == '/') onload="startTime()" @endif>
-    <div class="loader-wrapper">
+    {{-- <div class="loader-wrapper" id="loader-wrapper">
       <div class="loader-index"><span></span></div>
       <svg>
         <defs></defs>
@@ -26,7 +26,7 @@
           <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"> </fecolormatrix>
         </filter>
       </svg>
-    </div>
+    </div> --}}
     <!-- tap on top starts-->
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
     <!-- tap on tap ends-->

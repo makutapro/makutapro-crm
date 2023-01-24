@@ -29,13 +29,13 @@
 <div class="loader-wrapper" id="loader-wrapper">
 	<div class="loader-index"><span></span></div>
 	<svg>
-	  <defs></defs>
-	  <filter id="goo">
+	<defs></defs>
+	<filter id="goo">
 		<fegaussianblur in="SourceGraphic" stddeviation="11" result="blur"></fegaussianblur>
 		<fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"> </fecolormatrix>
-	  </filter>
+	</filter>
 	</svg>
-  </div>
+</div>
 
 @section('content')
 <div class="container-fluid">
@@ -287,16 +287,18 @@
 </script>
 
 <script>
-	// function showLoading(){
-	// 	// let loader = document.querySelector(".loader-wrapper")
-	// 	// loader.style.display = "block"
-	// 	document.getElementById('loader-wrapper').style.display = 'block';
-	// }
-	// function hideLoading(){
-	// 	// let loader = document.querySelector(".loader-wrapper")
-	// 	// loader.style.display = "none"
-	// 	document.getElementById('loader-wrapper').style.display = 'none';
-	// }
+	function showLoading(){
+		// let loader = document.querySelector(".loader-wrapper")
+		// loader.style.display = "block"
+		document.getElementById('loader-wrapper').style.display = 'block';
+	}
+	function hideLoading(){
+		// let loader = document.querySelector(".loader-wrapper")
+		// loader.style.display = "none"
+		// console.log('hide loading : ' , document.getElementById('loader-wrapper'))
+		document.getElementById('loader-wrapper').style.display = 'none';
+
+	}
 	function refreshDatatable(){
 		$('#prospect-datatable').DataTable({
         	"scrollX": true,
@@ -316,9 +318,9 @@
 					"since": $("#since").val(),
 					"to": $("#to").val(),
 				},
-				// "success": function(){
-				// 	hideLoading()
-				// }
+			},
+			"initComplete" : function(){
+				hideLoading()
 			},
 			"aoColumnDefs": [
 				{ "bSortable": false, "aTargets": [ 2, 3, 4, 5, 6, 7,8 ] },

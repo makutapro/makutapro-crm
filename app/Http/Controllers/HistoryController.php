@@ -26,6 +26,7 @@ class HistoryController extends Controller
                         'history_change_status.standard_id',
                         'history_change_status.role_id'
                     )
+                    ->orderBy('history_change_status.created_at','desc')
                     ->get();
       
         return response()->json($history);
@@ -36,6 +37,7 @@ class HistoryController extends Controller
         $history = HistoryProspectMove::join('sales','sales.id','history_prospect_move.sales_id_prev')
                                         ->where('history_prospect_move.prospect_id',$request->prospect_id)
                                         ->select('sales.nama_sales','history_prospect_move.created_at')
+                                        ->orderBy('history_prospect_move.created_at','desc')
                                         ->get();
       
 
@@ -47,6 +49,7 @@ class HistoryController extends Controller
                         ->join('media_fu as mf','mf.id','fu.media_fu_id')
                         ->where('fu.prospect_id',$request->prospect_id)
                         ->select('sales.nama_sales','mf.nama_media','fu.created_at')
+                        ->orderBy('fu.created_at','desc')
                         ->get();
 
         return response()->json($history);

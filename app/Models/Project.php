@@ -18,6 +18,11 @@ class Project extends Model
     {
         return $this->hasMany(Agent::class, 'project_id');
     }
+
+    public function banner()
+    {
+        return $this->hasMany(Banner::class, 'project_id');
+    }
     
     public function pt()
     {
@@ -31,4 +36,5 @@ class Project extends Model
                     ->select('project.*');
 
     }
+
 }

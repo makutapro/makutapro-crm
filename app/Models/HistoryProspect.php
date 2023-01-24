@@ -64,4 +64,14 @@ class HistoryProspect extends Model
                 
     }
 
+    public static function get_leads_by_status($status){
+        return DB::table('history_prospect as hpr')
+                    ->join('project','project.id','hpr.project_id')
+                    ->join('prospect','prospect.id','=','hpr.prospect_id')
+                    ->join('sales','hpr.sales_id','=','sales.sales_id')
+                    ->where('prospect.status_id','=',$status)
+                    ->select('hpr.prospect_id','hpr.sales_id','hpr.project_id','hpr.move_date','sales.user_id','project.nama_project')
+                    ->get();
+    }
+
 }

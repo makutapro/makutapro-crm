@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'hp',
         'photo',
         'ktp',
+        'api_token',
         'active'
     ];
     // public $timestamps = false;
@@ -56,6 +58,12 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     
+    public function generateToken()
+    {
+        $this->api_token = Str::random(60);
+        $this->save();
+        return $this->api_token;
+    }
 
     public function sales()
     {
