@@ -109,16 +109,20 @@
 									<p class="font-roboto">Overview of last month</p>
 								</div>
 								<div class="col-xl-12 p-0 left_side_earning">
-									<h5>Rp. 5.000.000</h5>
-									<p class="font-roboto">This Month Budget</p>
+									<h5>413</h5>
+									<p class="font-roboto">Leads Total</p>
 								</div>
 								<div class="col-xl-12 p-0 left_side_earning">
-									<h5>Rp. 47.575</h5>
-									<p class="font-roboto">Cost per leads</p>
+									<h5>10</h5>
+									<p class="font-roboto">Leads in Process</p>
 								</div>
 								<div class="col-xl-12 p-0 left_side_earning">
-									<h5>60%</h5>
-									<p class="font-roboto">Cost per Acquisition</p>
+									<h5>400</h5>
+									<p class="font-roboto">Leads not Interest</p>
+								</div>
+								<div class="col-xl-12 p-0 left_side_earning">
+									<h5>3</h5>
+									<p class="font-roboto">Leads Closing</p>
 								</div>
 							</div>
 						</div>
