@@ -226,6 +226,39 @@
 				</div>
 			 </div>
 		</div>
+
+{{-- Menampilkan Sales Activity --}}
+		<div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Sales Activity</div>
+                <div class="card-body sales-activity overflow" >
+                    <ul class="timeline">
+                        @if (count($historysales) == 0)
+                            <li>
+                                <div class="user-timeline-description">Belum ada aktivitas terbaru dari Sales</div>
+                            </li>
+                        @endif
+                        @foreach ($historysales as $item)
+                        <li >
+
+							    </li>
+                            <li class="event" data-date="{{$item->day}} {{$item->month}}  {{$item->hour}}:{{$item->minute}}">
+                                <h3>{{$item->subject_dev}}</h3>
+                                <p>{{$item->notes_dev}}</p>
+                            </li>
+                            {{-- <div class="user-timeline-date" style="color: #f6c163;">{{$item->day}} {{$item->month}}  {{$item->hour}}:{{$item->minute}} </div> --}}
+                            {{-- <div class="user-timeline-title" style="margin-bottom: 5px; font-size: 17px">{{$item->subject_dev}}</div> --}}
+                            {{-- <div class="user-timeline-description " style="margin-bottom: 20px">{{$item->notes_dev}}</div> --}}
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 		<div class="col-xl-12 xl-100 notification box-col-12">
 			<div class="card">
 				<div class="card-header card-no-border">
@@ -272,6 +305,131 @@
 <script type="text/javascript">
 	var session_layout = '{{ session()->get('layout') }}';
 </script>
+
+<style>
+	body{margin-top:20px;}
+.timeline {
+    border-left: 3px solid #727cf5;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    margin: 0 auto;
+    letter-spacing: 0.2px;
+    position: relative;
+    line-height: 1.4em;
+    font-size: 1.03em;
+    padding: 50px;
+    list-style: none;
+    text-align: left;
+    max-width: 70%;
+	margin-top: -30px;
+}
+
+@media (max-width: 767px) {
+    .timeline {
+        max-width: 98%;
+        padding: 25px;
+    }
+}
+
+.timeline h1 {
+    font-weight: 300;
+    font-size: 1.4em;
+}
+
+.timeline h2,
+.timeline h3 {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.timeline .event {
+    border-bottom: 1px dashed #e8ebf1;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+@media (max-width: 767px) {
+    .timeline .event {
+        padding-top: 30px;
+    }
+}
+
+.timeline .event:last-of-type {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border: none;
+}
+
+.timeline .event:before,
+.timeline .event:after {
+    position: absolute;
+    display: block;
+    top: 0;
+}
+
+.timeline .event:before {
+    left: -207px;
+    content: attr(data-date);
+    text-align: right;
+    font-weight: 100;
+    font-size: 0.9em;
+    min-width: 120px;
+}
+
+@media (max-width: 767px) {
+    .timeline .event:before {
+        left: 0px;
+        text-align: left;
+    }
+}
+
+.timeline .event:after {
+    -webkit-box-shadow: 0 0 0 3px #727cf5;
+    box-shadow: 0 0 0 3px #727cf5;
+    left: -55.8px;
+    background: #fff;
+    border-radius: 50%;
+    height: 9px;
+    width: 9px;
+    content: "";
+    top: 5px;
+}
+
+@media (max-width: 767px) {
+    .timeline .event:after {
+        left: -31.8px;
+    }
+}
+
+.rtl .timeline {
+    border-left: 0;
+    text-align: right;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border-right: 3px solid #727cf5;
+}
+
+.rtl .timeline .event::before {
+    left: 0;
+    right: -170px;
+}
+
+.rtl .timeline .event::after {
+    left: 0;
+    right: 55.8px;
+}
+
+.overflow {
+	width: 1200px;
+  	height: 500px;
+  	overflow: scroll;
+}
+</style>
+
 @endsection
 
 @section('script')

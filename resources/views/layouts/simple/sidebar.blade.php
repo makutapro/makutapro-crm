@@ -40,7 +40,7 @@
 
 					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('agent.index')}}"><i data-feather="codepen"> </i><span>Campaign Management</span></a></li>
 
-					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('agent.index')}}"><i data-feather="map"> </i><span>Unit Type</span></a></li>
+					<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('unittype.index')}}"><i data-feather="map"> </i><span>Unit Type</span></a></li>
 
 
 				</ul>

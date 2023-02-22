@@ -10,6 +10,7 @@ use App\Http\Controllers\DemografiController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -50,6 +51,7 @@ Route::post('agent/active', [AgentController::class, 'active'])->middleware(['au
 Route::post('agent/nonactive', [AgentController::class, 'nonactive'])->middleware(['auth'])->name('agent.nonactive');
 Route::get('sales/{agent_id}', [SalesController::class, 'index'])->middleware(['auth'])->name('sales.index');
 Route::post('sales/update', [SalesController::class, 'update'])->middleware(['auth'])->name('sales.update');
+Route::resource('unittype', UnitController::class)->middleware('auth');
 
 
 Route::get('/getsales', [AgentController::class, 'getSales'])->name('agent.getsales');

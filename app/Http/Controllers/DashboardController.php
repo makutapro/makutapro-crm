@@ -94,8 +94,18 @@ class DashboardController extends Controller
                 ->count();
         // dd($closing,$notinterest);
 
+        $historysales = HistorySales::join('sales', 'sales.id', 'history_sales.sales_id')
+                                    ->join('project', 'project.id', 'history_sales.project_id')
+                                    ->join('pt', 'pt.id', 'project.pt_id')
+                                    ->join('users','users.id','pt.user_id')
+                                    ->select('sales.nama_sales', 'history_sales.notes_dev', 'history_sales.subject_dev',
+                                     DB::raw('MonthName(history_sales.created_at) month, day(history_sales.created_at) day, Hour(history_sales.created_at) hour, minute(history_sales.created_at) minute'))
+                                    ->where('pt.user_id',Auth::user()->id)
+                                    ->orderBy('sales.id', 'desc')
+                                    ->get();
+
         return view('pages.dashboard.index',compact(
-            'total','process','closing','notinterest'
+            'total','process','closing','notinterest','historysales'
         ));
     }
 
